@@ -252,6 +252,23 @@ function App() {
               <a href="#agendamento" className="text-gray-700 hover:text-rose-500 transition-colors hover-lift">Agendamento</a>
               <a href="#contato" className="text-gray-700 hover:text-rose-500 transition-colors hover-lift">Contato</a>
             </nav>
+            
+            {/* Menu mobile */}
+            <div className="md:hidden">
+              <select 
+                onChange={(e) => document.getElementById(e.target.value)?.scrollIntoView({ behavior: 'smooth' })}
+                className="text-sm bg-white border border-gray-300 rounded-md px-2 py-1"
+                defaultValue=""
+              >
+                <option value="">Menu</option>
+                <option value="inicio">Início</option>
+                <option value="sobre">Sobre</option>
+                <option value="servicos">Serviços</option>
+                <option value="portfolio">Portfolio</option>
+                <option value="agendamento">Agendamento</option>
+                <option value="contato">Contato</option>
+              </select>
+            </div>
             <Button onClick={openWhatsApp} className="bg-green-500 hover:bg-green-600 animate-slideInRight hover-scale">
               <Phone className="w-4 h-4 mr-2" />
               WhatsApp
