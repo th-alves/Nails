@@ -664,9 +664,21 @@ function App() {
                     <Input
                       id="phone"
                       value={formData.phone}
-                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                      onChange={(e) => {
+                        // Formatação básica de telefone
+                        let value = e.target.value.replace(/\D/g, '');
+                        if (value.length <= 11) {
+                          if (value.length > 6) {
+                            value = value.replace(/(\d{2})(\d{4,5})(\d{4})/, '($1) $2-$3');
+                          } else if (value.length > 2) {
+                            value = value.replace(/(\d{2})(\d+)/, '($1) $2');
+                          }
+                        }
+                        setFormData({ ...formData, phone: value });
+                      }}
                       placeholder="(11) 99999-9999"
                       className="mt-1"
+                      maxLength={15}
                     />
                   </div>
 
