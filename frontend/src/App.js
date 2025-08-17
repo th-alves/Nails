@@ -192,7 +192,24 @@ function App() {
 
     } catch (error) {
       console.error('Erro ao fazer agendamento:', error);
-      toast.error('Erro ao fazer agendamento. Tente novamente.');
+      
+      // Tratar diferentes tipos de erro
+      if (error.response) {
+        const status = error.response.status;
+        const message = error.response.data?.detail || 'Erro desconhecido';
+        
+        if (status === 409) {
+          toast.error('Este horário já foi agendado. Escolha outro horário.');
+        } else if (status === 400) {
+          toast.error(`Erro na validação: ${message}`);
+        } else {
+          toast.error(`Erro no servidor: ${message}`);
+        }
+      } else if (error.request) {
+        toast.error('Erro de conexão. Verifique sua internet e tente novamente.');
+      } else {
+        toast.error('Erro ao fazer agendamento. Tente novamente.');
+      }
     } finally {
       setIsLoading(false);
     }
