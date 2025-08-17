@@ -61,8 +61,19 @@ function App() {
 
   // Lidar com seleção de data no calendário
   const handleDateSelect = async (date) => {
-    if (!isDateAvailable(date)) {
+    if (!date) return;
+    
+    const day = date.getDay();
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    
+    if (day === 0 || day === 6) {
       toast.error('Não atendemos nos finais de semana');
+      return;
+    }
+    
+    if (date < today) {
+      toast.error('Não é possível agendar em datas passadas');
       return;
     }
 
@@ -75,6 +86,7 @@ function App() {
       setAvailableSlots(response.data);
     } catch (error) {
       console.error('Erro ao buscar horários disponíveis:', error);
+      // Fallback to generate slots locally if API fails
       setAvailableSlots(generateTimeSlots());
     }
   };
