@@ -569,7 +569,7 @@ function App() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
             {/* Calendário */}
             <div className="space-y-6 animate-slideInLeft">
               <div>
