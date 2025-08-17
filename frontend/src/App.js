@@ -574,13 +574,13 @@ function App() {
             <div className="space-y-6 animate-slideInLeft">
               <div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-4">Escolha uma data</h3>
-                <div className="bg-white rounded-lg shadow-md p-6 hover-lift">
+                <div className="bg-white rounded-lg shadow-md p-3 md:p-6 hover-lift">
                   <CalendarComponent
                     mode="single"
                     selected={selectedDate}
                     onSelect={handleDateSelect}
                     disabled={(date) => !isDateAvailable(date)}
-                    className="w-full"
+                    className="w-full mx-auto max-w-sm md:max-w-none"
                   />
                 </div>
                 <p className="text-sm text-gray-500 mt-2">
