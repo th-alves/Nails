@@ -10,6 +10,7 @@ import { Input } from './components/ui/input';
 import { Label } from './components/ui/label';
 import { Textarea } from './components/ui/textarea';
 import { toast } from 'sonner';
+import kamile from "./images/kamile.png";
 import './App.css';
 
 const API_BASE_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
@@ -108,7 +109,7 @@ function App() {
     const day = date.getDay();
     const today = new Date();
     today.setHours(0, 0, 0, 0); // Reset time to start of day
-    
+
     // Must be weekday (Monday-Friday) and not in the past
     return day !== 0 && day !== 6 && date >= today;
   };
@@ -116,16 +117,16 @@ function App() {
   // Lidar com seleção de data no calendário
   const handleDateSelect = async (date) => {
     if (!date) return;
-    
+
     const day = date.getDay();
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-    
+
     if (day === 0 || day === 6) {
       toast.error('Não atendemos nos finais de semana');
       return;
     }
-    
+
     if (date < today) {
       toast.error('Não é possível agendar em datas passadas');
       return;
@@ -133,7 +134,7 @@ function App() {
 
     setSelectedDate(date);
     setIsLoading(true);
-    
+
     try {
       const response = await axios.get(`${API_BASE_URL}/api/available-slots`, {
         params: { date: date.toISOString().split('T')[0] }
@@ -167,7 +168,7 @@ function App() {
       };
 
       await axios.post(`${API_BASE_URL}/api/bookings`, bookingData);
-      
+
       toast.success('Agendamento realizado com sucesso!');
       setIsDialogOpen(false);
       setFormData({ name: '', phone: '', notes: '' });
@@ -179,7 +180,7 @@ function App() {
       const message = `Olá! Acabei de agendar um horário para manicure:\n\nData: ${selectedDate.toLocaleDateString('pt-BR')}\nHorário: ${selectedTime}\nNome: ${formData.name}\nTelefone: ${formData.phone}`;
       const whatsappUrl = `https://wa.me/5511963065438?text=${encodeURIComponent(message)}`;
       window.open(whatsappUrl, '_blank');
-      
+
     } catch (error) {
       console.error('Erro ao fazer agendamento:', error);
       toast.error('Erro ao fazer agendamento. Tente novamente.');
@@ -227,18 +228,18 @@ function App() {
       <section id="inicio" className="relative py-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
         {/* Background Image */}
         <div className="absolute inset-0 z-0">
-          <img 
-            src="https://images.unsplash.com/photo-1722872112546-936593441be8" 
+          <img
+            src="https://images.unsplash.com/photo-1722872112546-936593441be8"
             alt="Elegant manicure background"
             className="w-full h-full object-cover opacity-20"
           />
           <div className="absolute inset-0 gradient-bg"></div>
         </div>
-        
+
         <div className="max-w-7xl mx-auto text-center relative z-10">
           <div className="mb-8">
             <Badge className="mb-4 bg-rose-100 text-rose-700 border-rose-200 animate-fadeInUp hover-scale">
-              💅 Especialista em Manicure
+              Especialista em Manicure
             </Badge>
             <h1 className="text-5xl md:text-7xl font-bold text-gray-900 mb-6 animate-fadeInUp">
               Suas unhas
@@ -247,23 +248,23 @@ function App() {
               </span>
             </h1>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8 animate-fadeInUp">
-              Transformo suas unhas em verdadeiras obras de arte. Atendimento personalizado 
+              Transformo suas unhas em verdadeiras obras de arte. Atendimento personalizado
               com produtos de alta qualidade em um ambiente acolhedor e profissional.
             </p>
           </div>
-          
+
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12 animate-fadeInUp">
-            <Button 
-              size="lg" 
+            <Button
+              size="lg"
               onClick={() => document.getElementById('agendamento').scrollIntoView({ behavior: 'smooth' })}
               className="bg-gradient-to-r from-rose-400 to-pink-400 hover:from-rose-500 hover:to-pink-500 text-white px-8 py-3 hover-lift"
             >
               <Calendar className="w-5 h-5 mr-2" />
               Agendar Horário
             </Button>
-            <Button 
-              size="lg" 
-              variant="outline" 
+            <Button
+              size="lg"
+              variant="outline"
               onClick={openWhatsApp}
               className="border-rose-300 text-rose-600 hover:bg-rose-50 px-8 py-3 hover-lift"
             >
@@ -275,7 +276,7 @@ function App() {
           {/* Estatísticas */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
             <div className="text-center animate-slideInLeft hover-lift">
-              <div className="text-3xl font-bold text-rose-500 mb-2 animate-pulse-gentle">5+ Anos</div>
+              <div className="text-3xl font-bold text-rose-500 mb-2 animate-pulse-gentle">2+ Anos</div>
               <div className="text-gray-600">de Experiência</div>
             </div>
             <div className="text-center animate-fadeInUp hover-lift">
@@ -296,31 +297,27 @@ function App() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="animate-slideInLeft">
               <div className="relative">
-                <img 
-                  src="https://images.unsplash.com/photo-1659391542239-9648f307c0b1?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2NDJ8MHwxfHNlYXJjaHw0fHxtYW5pY3VyZSUyMHNhbG9ufGVufDB8fHx8MTc1NTQ2NjYzOHww&ixlib=rb-4.1.0&q=85" 
-                  alt="Kamile trabalhando"
-                  className="w-full h-96 object-cover rounded-2xl shadow-2xl hover-scale"
-                />
+                <img src={kamile} alt="Kamile trabalhando" className="w-full h-96 object-cover rounded-2xl shadow-2xl hover-scale" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent rounded-2xl"></div>
               </div>
             </div>
-            
+
             <div className="animate-slideInRight">
               <Badge className="mb-4 bg-rose-100 text-rose-700 border-rose-200">
                 <Award className="w-4 h-4 mr-2" />
                 Profissional Certificada
               </Badge>
-              
+
               <h2 className="text-4xl font-bold text-gray-900 mb-6 gradient-text">
-                Conheça a Kamile
+                Um pouco sobre mim
               </h2>
-              
+
               <p className="text-lg text-gray-600 mb-6">
-                Sou manicure profissional há mais de 5 anos, especializada em nail art e 
-                técnicas modernas de cuidado com as unhas. Minha paixão é transformar as 
+                Sou manicure profissional há mais de 2 anos, especializada em nail art e
+                técnicas modernas de cuidado com as unhas. Minha paixão é transformar as
                 unhas das minhas clientes em verdadeiras obras de arte.
               </p>
-              
+
               <div className="space-y-4 mb-8">
                 <div className="flex items-center space-x-3">
                   <CheckCircle className="w-5 h-5 text-green-500" />
@@ -339,12 +336,12 @@ function App() {
                   <span className="text-gray-700">Produtos de alta qualidade</span>
                 </div>
               </div>
-              
-              <Button 
+
+              <Button
                 onClick={() => document.getElementById('agendamento').scrollIntoView({ behavior: 'smooth' })}
                 className="bg-gradient-to-r from-rose-400 to-pink-400 hover:from-rose-500 hover:to-pink-500 hover-lift"
               >
-                Agendar com Kamile
+                Vem ser minha cliente!
                 <ArrowRight className="w-4 h-4 ml-2" />
               </Button>
             </div>
@@ -370,14 +367,14 @@ function App() {
 
           <div className="auto-grid">
             {portfolioWorks.map((work, index) => (
-              <Card 
-                key={work.id} 
+              <Card
+                key={work.id}
                 className={`hover-lift group border-0 shadow-lg overflow-hidden animate-fadeInUp`}
-                style={{animationDelay: `${index * 0.1}s`}}
+                style={{ animationDelay: `${index * 0.1}s` }}
               >
                 <div className="relative overflow-hidden">
-                  <img 
-                    src={work.image} 
+                  <img
+                    src={work.image}
                     alt={work.title}
                     className="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110"
                   />
@@ -392,7 +389,7 @@ function App() {
           </div>
 
           <div className="text-center mt-12 animate-fadeInUp">
-            <Button 
+            <Button
               onClick={openWhatsApp}
               variant="outline"
               className="border-rose-300 text-rose-600 hover:bg-rose-50 hover-lift"
@@ -414,12 +411,12 @@ function App() {
             <p className="text-xl text-gray-600 max-w-2xl mx-auto mb-12">
               Ofereço serviços completos de manicure com técnicas modernas e produtos de qualidade premium
             </p>
-            
+
             {/* Gallery Images */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
               <div className="relative group animate-slideInLeft">
-                <img 
-                  src="https://images.unsplash.com/photo-1632345031435-8727f6897d53" 
+                <img
+                  src="https://images.unsplash.com/photo-1632345031435-8727f6897d53"
                   alt="Serviço profissional de manicure"
                   className="w-full h-64 object-cover rounded-lg shadow-lg hover-lift"
                 />
@@ -429,10 +426,10 @@ function App() {
                   <p className="text-sm opacity-90">Cuidado dedicado e personalizado</p>
                 </div>
               </div>
-              
+
               <div className="relative group animate-slideInRight">
-                <img 
-                  src="https://images.pexels.com/photos/6724357/pexels-photo-6724357.jpeg" 
+                <img
+                  src="https://images.pexels.com/photos/6724357/pexels-photo-6724357.jpeg"
                   alt="Ambiente profissional"
                   className="w-full h-64 object-cover rounded-lg shadow-lg hover-lift"
                 />
@@ -466,9 +463,9 @@ function App() {
               </CardContent>
             </Card>
 
-            <Card className="hover-lift transition-all duration-300 border-pink-100 animate-fadeInUp" style={{animationDelay: '0.1s'}}>
+            <Card className="hover-lift transition-all duration-300 border-pink-100 animate-fadeInUp" style={{ animationDelay: '0.1s' }}>
               <CardHeader>
-                <div className="w-12 h-12 bg-pink-100 rounded-lg flex items-center justify-center mb-4 animate-float" style={{animationDelay: '0.5s'}}>
+                <div className="w-12 h-12 bg-pink-100 rounded-lg flex items-center justify-center mb-4 animate-float" style={{ animationDelay: '0.5s' }}>
                   <Heart className="w-6 h-6 text-pink-500" />
                 </div>
                 <CardTitle className="text-pink-900">Manutenção</CardTitle>
@@ -486,9 +483,9 @@ function App() {
               </CardContent>
             </Card>
 
-            <Card className="hover-lift transition-all duration-300 border-blue-100 animate-fadeInUp" style={{animationDelay: '0.2s'}}>
+            <Card className="hover-lift transition-all duration-300 border-blue-100 animate-fadeInUp" style={{ animationDelay: '0.2s' }}>
               <CardHeader>
-                <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4 animate-float" style={{animationDelay: '1s'}}>
+                <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4 animate-float" style={{ animationDelay: '1s' }}>
                   <Star className="w-6 h-6 text-blue-400" />
                 </div>
                 <CardTitle className="text-blue-900">Nail Art</CardTitle>
@@ -527,10 +524,10 @@ function App() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {testimonials.map((testimonial, index) => (
-              <Card 
-                key={testimonial.id} 
+              <Card
+                key={testimonial.id}
                 className={`hover-lift border-0 shadow-lg animate-fadeInUp`}
-                style={{animationDelay: `${index * 0.2}s`}}
+                style={{ animationDelay: `${index * 0.2}s` }}
               >
                 <CardContent className="p-6">
                   <Quote className="w-8 h-8 text-rose-400 mb-4" />
@@ -605,11 +602,11 @@ function App() {
                           key={slot}
                           variant={selectedTime === slot ? "default" : "outline"}
                           onClick={() => setSelectedTime(slot)}
-                          className={`hover-scale animate-fadeInUp ${selectedTime === slot ? 
-                            "bg-rose-500 hover:bg-rose-600" : 
+                          className={`hover-scale animate-fadeInUp ${selectedTime === slot ?
+                            "bg-rose-500 hover:bg-rose-600" :
                             "border-rose-200 text-rose-600 hover:bg-rose-50"
-                          }`}
-                          style={{animationDelay: `${index * 0.1}s`}}
+                            }`}
+                          style={{ animationDelay: `${index * 0.1}s` }}
                         >
                           {slot}
                         </Button>
@@ -630,29 +627,29 @@ function App() {
                     <Input
                       id="name"
                       value={formData.name}
-                      onChange={(e) => setFormData({...formData, name: e.target.value})}
+                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                       placeholder="Digite seu nome"
                       className="mt-1"
                     />
                   </div>
-                  
+
                   <div>
                     <Label htmlFor="phone">WhatsApp *</Label>
                     <Input
                       id="phone"
                       value={formData.phone}
-                      onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                       placeholder="(11) 99999-9999"
                       className="mt-1"
                     />
                   </div>
-                  
+
                   <div>
                     <Label htmlFor="notes">Observações</Label>
                     <Textarea
                       id="notes"
                       value={formData.notes}
-                      onChange={(e) => setFormData({...formData, notes: e.target.value})}
+                      onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
                       placeholder="Alguma preferência especial?"
                       className="mt-1"
                       rows={3}
@@ -670,8 +667,8 @@ function App() {
                       </p>
                     </div>
                   )}
-                  
-                  <Button 
+
+                  <Button
                     onClick={handleBooking}
                     className="w-full bg-gradient-to-r from-rose-400 to-pink-400 hover:from-rose-500 hover:to-pink-500 hover-lift"
                     disabled={!selectedDate || !selectedTime || !formData.name || !formData.phone || isLoading}
@@ -698,7 +695,7 @@ function App() {
           <h2 className="text-4xl font-bold text-gray-900 mb-8 gradient-text animate-fadeInUp">
             Entre em Contato
           </h2>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <Card className="hover-lift transition-all duration-300 animate-slideInLeft">
               <CardHeader>
@@ -718,7 +715,7 @@ function App() {
 
             <Card className="hover-lift transition-all duration-300 animate-slideInRight">
               <CardHeader>
-                <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-4 animate-float" style={{animationDelay: '0.5s'}}>
+                <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-4 animate-float" style={{ animationDelay: '0.5s' }}>
                   <Clock className="w-6 h-6 text-blue-500" />
                 </div>
                 <CardTitle>Horário de Funcionamento</CardTitle>
@@ -742,15 +739,15 @@ function App() {
             <Sparkles className="h-8 w-8 text-rose-400 animate-float" />
             <span className="text-2xl font-bold">Kamile Nails</span>
           </div>
-          
+
           <p className="text-gray-400 mb-6 animate-fadeInUp">
             Transformando suas unhas em verdadeiras obras de arte desde 2019
           </p>
-          
+
           <div className="flex justify-center space-x-6 mb-6 animate-fadeInUp">
-            <Button 
-              variant="ghost" 
-              size="sm" 
+            <Button
+              variant="ghost"
+              size="sm"
               onClick={openWhatsApp}
               className="text-gray-400 hover:text-white hover-scale"
             >
@@ -758,7 +755,7 @@ function App() {
               WhatsApp
             </Button>
           </div>
-          
+
           <div className="border-t border-gray-800 pt-6 animate-fadeInUp">
             <p className="text-gray-500 text-sm">
               © 2024 Kamile Nails. Todos os direitos reservados.
