@@ -104,6 +104,16 @@ function App() {
     return slots;
   };
 
+  // Função para encontrar a próxima segunda-feira
+  const getNextMonday = () => {
+    const today = new Date();
+    const dayOfWeek = today.getDay(); // 0 = Sunday, 1 = Monday, etc.
+    const daysUntilMonday = dayOfWeek === 0 ? 1 : (8 - dayOfWeek); // If Sunday, 1 day; otherwise, days to next Monday
+    const nextMonday = new Date(today);
+    nextMonday.setDate(today.getDate() + daysUntilMonday);
+    return nextMonday;
+  };
+
   // Verificar se uma data está disponível (não é fim de semana nem feriado)
   const isDateAvailable = (date) => {
     if (!date) return false;
