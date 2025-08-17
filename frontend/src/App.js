@@ -595,7 +595,12 @@ function App() {
             <div className="space-y-6 animate-slideInLeft">
               <div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-4">Escolha uma data</h3>
-                <div className="bg-white rounded-lg shadow-md p-3 md:p-6 hover-lift">
+                <div className="bg-white rounded-lg shadow-md p-3 md:p-6 hover-lift relative">
+                  {isLoading && (
+                    <div className="absolute inset-0 bg-white/70 backdrop-blur-sm rounded-lg flex items-center justify-center z-10">
+                      <div className="loading-dots text-rose-500">Carregando</div>
+                    </div>
+                  )}
                   <CalendarComponent
                     mode="single"
                     selected={selectedDate}
