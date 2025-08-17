@@ -626,7 +626,7 @@ function App() {
             <div className="space-y-6 animate-slideInRight">
               <div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-4">Seus dados</h3>
-                <div className="bg-white rounded-lg shadow-md p-6 space-y-4 hover-lift">
+                <div className="bg-white rounded-lg shadow-md p-4 md:p-6 space-y-4 hover-lift">
                   <div>
                     <Label htmlFor="name">Nome completo *</Label>
                     <Input
