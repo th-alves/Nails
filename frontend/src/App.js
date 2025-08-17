@@ -14,12 +14,66 @@ import './App.css';
 
 const API_BASE_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
 
+// Dados dos testimoniais
+const testimonials = [
+  {
+    id: 1,
+    name: "Maria Silva",
+    text: "Kamile é incrível! Sempre saio de lá com as unhas perfeitas. Atendimento excepcional e um trabalho impecável.",
+    rating: 5,
+    service: "Manicure Clássica"
+  },
+  {
+    id: 2,
+    name: "Ana Costa",
+    text: "Profissional super dedicada e talentosa. As nail arts que ela faz são verdadeiras obras de arte!",
+    rating: 5,
+    service: "Nail Art"
+  },
+  {
+    id: 3,
+    name: "Julia Santos",
+    text: "Encontrei na Kamile não apenas uma profissional competente, mas uma pessoa que realmente se importa com o cliente.",
+    rating: 5,
+    service: "Manutenção"
+  }
+];
+
+// Portfolio de trabalhos
+const portfolioWorks = [
+  {
+    id: 1,
+    title: "Nail Art Elegante",
+    image: "https://images.unsplash.com/photo-1519014816548-bf5fe059798b?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2NzR8MHwxfHNlYXJjaHwxfHxuYWlsJTIwYXJ0fGVufDB8fHx8MTc1NTQ2NjU5OXww&ixlib=rb-4.1.0&q=85",
+    description: "Design sofisticado em tons rosados"
+  },
+  {
+    id: 2,
+    title: "Arte Geométrica",
+    image: "https://images.unsplash.com/photo-1571290274554-6a2eaa771e5f?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2NzR8MHwxfHNlYXJjaHwyfHxuYWlsJTIwYXJ0fGVufDB8fHx8MTc1NTQ2NjU5OXww&ixlib=rb-4.1.0&q=85",
+    description: "Padrões geométricos coloridos"
+  },
+  {
+    id: 3,
+    title: "Esmaltes Premium",
+    image: "https://images.unsplash.com/photo-1619607146034-5a05296c8f9a?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2NzR8MHwxfHNlYXJjaHwzfHxuYWlsJTIwYXJ0fGVufDB8fHx8MTc1NTQ2NjU5OXww&ixlib=rb-4.1.0&q=85",
+    description: "Variedade de cores de alta qualidade"
+  },
+  {
+    id: 4,
+    title: "Design Exclusivo",
+    image: "https://images.pexels.com/photos/887352/pexels-photo-887352.jpeg",
+    description: "Nail art personalizada única"
+  }
+];
+
 function App() {
   const [selectedDate, setSelectedDate] = useState(null);
   const [availableSlots, setAvailableSlots] = useState([]);
   const [selectedTime, setSelectedTime] = useState('');
   const [bookedDates, setBookedDates] = useState([]);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
@@ -78,6 +132,7 @@ function App() {
     }
 
     setSelectedDate(date);
+    setIsLoading(true);
     
     try {
       const response = await axios.get(`${API_BASE_URL}/api/available-slots`, {
@@ -88,6 +143,8 @@ function App() {
       console.error('Erro ao buscar horários disponíveis:', error);
       // Fallback to generate slots locally if API fails
       setAvailableSlots(generateTimeSlots());
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -97,6 +154,8 @@ function App() {
       toast.error('Por favor, preencha todos os campos obrigatórios');
       return;
     }
+
+    setIsLoading(true);
 
     try {
       const bookingData = {
@@ -124,6 +183,8 @@ function App() {
     } catch (error) {
       console.error('Erro ao fazer agendamento:', error);
       toast.error('Erro ao fazer agendamento. Tente novamente.');
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -137,22 +198,24 @@ function App() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-rose-50 via-pink-50 to-blue-50">
       {/* Header */}
-      <header className="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50">
+      <header className="glass sticky top-0 z-50 border-b border-white/20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-4">
-            <div className="flex items-center space-x-2">
-              <Sparkles className="h-8 w-8 text-rose-500" />
-              <span className="text-2xl font-bold bg-gradient-to-r from-rose-500 to-pink-500 bg-clip-text text-transparent">
+            <div className="flex items-center space-x-2 animate-slideInLeft">
+              <Sparkles className="h-8 w-8 text-rose-500 animate-float" />
+              <span className="text-2xl font-bold gradient-text">
                 Kamile Nails
               </span>
             </div>
-            <nav className="hidden md:flex space-x-8">
-              <a href="#inicio" className="text-gray-700 hover:text-rose-500 transition-colors">Início</a>
-              <a href="#servicos" className="text-gray-700 hover:text-rose-500 transition-colors">Serviços</a>
-              <a href="#agendamento" className="text-gray-700 hover:text-rose-500 transition-colors">Agendamento</a>
-              <a href="#contato" className="text-gray-700 hover:text-rose-500 transition-colors">Contato</a>
+            <nav className="hidden md:flex space-x-8 animate-fadeInUp">
+              <a href="#inicio" className="text-gray-700 hover:text-rose-500 transition-colors hover-lift">Início</a>
+              <a href="#sobre" className="text-gray-700 hover:text-rose-500 transition-colors hover-lift">Sobre</a>
+              <a href="#servicos" className="text-gray-700 hover:text-rose-500 transition-colors hover-lift">Serviços</a>
+              <a href="#portfolio" className="text-gray-700 hover:text-rose-500 transition-colors hover-lift">Portfolio</a>
+              <a href="#agendamento" className="text-gray-700 hover:text-rose-500 transition-colors hover-lift">Agendamento</a>
+              <a href="#contato" className="text-gray-700 hover:text-rose-500 transition-colors hover-lift">Contato</a>
             </nav>
-            <Button onClick={openWhatsApp} className="bg-green-500 hover:bg-green-600">
+            <Button onClick={openWhatsApp} className="bg-green-500 hover:bg-green-600 animate-slideInRight hover-scale">
               <Phone className="w-4 h-4 mr-2" />
               WhatsApp
             </Button>
@@ -169,31 +232,31 @@ function App() {
             alt="Elegant manicure background"
             className="w-full h-full object-cover opacity-20"
           />
-          <div className="absolute inset-0 bg-gradient-to-br from-rose-50/90 via-pink-50/90 to-blue-50/90"></div>
+          <div className="absolute inset-0 gradient-bg"></div>
         </div>
         
         <div className="max-w-7xl mx-auto text-center relative z-10">
           <div className="mb-8">
-            <Badge className="mb-4 bg-rose-100 text-rose-700 border-rose-200">
+            <Badge className="mb-4 bg-rose-100 text-rose-700 border-rose-200 animate-fadeInUp hover-scale">
               💅 Especialista em Manicure
             </Badge>
-            <h1 className="text-5xl md:text-7xl font-bold text-gray-900 mb-6">
+            <h1 className="text-5xl md:text-7xl font-bold text-gray-900 mb-6 animate-fadeInUp">
               Suas unhas
-              <span className="block bg-gradient-to-r from-rose-400 to-pink-400 bg-clip-text text-transparent">
+              <span className="block gradient-text animate-pulse-gentle">
                 perfeitas
               </span>
             </h1>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8 animate-fadeInUp">
               Transformo suas unhas em verdadeiras obras de arte. Atendimento personalizado 
               com produtos de alta qualidade em um ambiente acolhedor e profissional.
             </p>
           </div>
           
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12 animate-fadeInUp">
             <Button 
               size="lg" 
               onClick={() => document.getElementById('agendamento').scrollIntoView({ behavior: 'smooth' })}
-              className="bg-gradient-to-r from-rose-400 to-pink-400 hover:from-rose-500 hover:to-pink-500 text-white px-8 py-3"
+              className="bg-gradient-to-r from-rose-400 to-pink-400 hover:from-rose-500 hover:to-pink-500 text-white px-8 py-3 hover-lift"
             >
               <Calendar className="w-5 h-5 mr-2" />
               Agendar Horário
@@ -202,7 +265,7 @@ function App() {
               size="lg" 
               variant="outline" 
               onClick={openWhatsApp}
-              className="border-rose-300 text-rose-600 hover:bg-rose-50 px-8 py-3"
+              className="border-rose-300 text-rose-600 hover:bg-rose-50 px-8 py-3 hover-lift"
             >
               <Phone className="w-5 h-5 mr-2" />
               Falar no WhatsApp
@@ -211,18 +274,132 @@ function App() {
 
           {/* Estatísticas */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-            <div className="text-center">
-              <div className="text-3xl font-bold text-rose-500 mb-2">5+ Anos</div>
+            <div className="text-center animate-slideInLeft hover-lift">
+              <div className="text-3xl font-bold text-rose-500 mb-2 animate-pulse-gentle">5+ Anos</div>
               <div className="text-gray-600">de Experiência</div>
             </div>
-            <div className="text-center">
-              <div className="text-3xl font-bold text-pink-500 mb-2">1000+</div>
+            <div className="text-center animate-fadeInUp hover-lift">
+              <div className="text-3xl font-bold text-pink-500 mb-2 animate-pulse-gentle">1000+</div>
               <div className="text-gray-600">Clientes Satisfeitas</div>
             </div>
-            <div className="text-center">
-              <div className="text-3xl font-bold text-blue-400 mb-2">100%</div>
+            <div className="text-center animate-slideInRight hover-lift">
+              <div className="text-3xl font-bold text-blue-400 mb-2 animate-pulse-gentle">100%</div>
               <div className="text-gray-600">Dedicação</div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Seção Sobre Mim */}
+      <section id="sobre" className="py-20 px-4 sm:px-6 lg:px-8 bg-white/50">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div className="animate-slideInLeft">
+              <div className="relative">
+                <img 
+                  src="https://images.unsplash.com/photo-1659391542239-9648f307c0b1?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2NDJ8MHwxfHNlYXJjaHw0fHxtYW5pY3VyZSUyMHNhbG9ufGVufDB8fHx8MTc1NTQ2NjYzOHww&ixlib=rb-4.1.0&q=85" 
+                  alt="Kamile trabalhando"
+                  className="w-full h-96 object-cover rounded-2xl shadow-2xl hover-scale"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent rounded-2xl"></div>
+              </div>
+            </div>
+            
+            <div className="animate-slideInRight">
+              <Badge className="mb-4 bg-rose-100 text-rose-700 border-rose-200">
+                <Award className="w-4 h-4 mr-2" />
+                Profissional Certificada
+              </Badge>
+              
+              <h2 className="text-4xl font-bold text-gray-900 mb-6 gradient-text">
+                Conheça a Kamile
+              </h2>
+              
+              <p className="text-lg text-gray-600 mb-6">
+                Sou manicure profissional há mais de 5 anos, especializada em nail art e 
+                técnicas modernas de cuidado com as unhas. Minha paixão é transformar as 
+                unhas das minhas clientes em verdadeiras obras de arte.
+              </p>
+              
+              <div className="space-y-4 mb-8">
+                <div className="flex items-center space-x-3">
+                  <CheckCircle className="w-5 h-5 text-green-500" />
+                  <span className="text-gray-700">Formação em Podologia e Manicure</span>
+                </div>
+                <div className="flex items-center space-x-3">
+                  <CheckCircle className="w-5 h-5 text-green-500" />
+                  <span className="text-gray-700">Especialização em Nail Art</span>
+                </div>
+                <div className="flex items-center space-x-3">
+                  <CheckCircle className="w-5 h-5 text-green-500" />
+                  <span className="text-gray-700">Mais de 1000 clientes atendidas</span>
+                </div>
+                <div className="flex items-center space-x-3">
+                  <CheckCircle className="w-5 h-5 text-green-500" />
+                  <span className="text-gray-700">Produtos de alta qualidade</span>
+                </div>
+              </div>
+              
+              <Button 
+                onClick={() => document.getElementById('agendamento').scrollIntoView({ behavior: 'smooth' })}
+                className="bg-gradient-to-r from-rose-400 to-pink-400 hover:from-rose-500 hover:to-pink-500 hover-lift"
+              >
+                Agendar com Kamile
+                <ArrowRight className="w-4 h-4 ml-2" />
+              </Button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Portfolio */}
+      <section id="portfolio" className="py-20 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16 animate-fadeInUp">
+            <Badge className="mb-4 bg-rose-100 text-rose-700 border-rose-200">
+              <Palette className="w-4 h-4 mr-2" />
+              Trabalhos Realizados
+            </Badge>
+            <h2 className="text-4xl font-bold text-gray-900 mb-4 gradient-text">
+              Portfolio de Nail Art
+            </h2>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+              Confira alguns dos trabalhos exclusivos que já realizei para minhas clientes
+            </p>
+          </div>
+
+          <div className="auto-grid">
+            {portfolioWorks.map((work, index) => (
+              <Card 
+                key={work.id} 
+                className={`hover-lift group border-0 shadow-lg overflow-hidden animate-fadeInUp`}
+                style={{animationDelay: `${index * 0.1}s`}}
+              >
+                <div className="relative overflow-hidden">
+                  <img 
+                    src={work.image} 
+                    alt={work.title}
+                    className="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  <div className="absolute bottom-4 left-4 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <h3 className="font-semibold text-lg">{work.title}</h3>
+                    <p className="text-sm">{work.description}</p>
+                  </div>
+                </div>
+              </Card>
+            ))}
+          </div>
+
+          <div className="text-center mt-12 animate-fadeInUp">
+            <Button 
+              onClick={openWhatsApp}
+              variant="outline"
+              className="border-rose-300 text-rose-600 hover:bg-rose-50 hover-lift"
+            >
+              Ver Mais Trabalhos no Instagram
+              <Instagram className="w-4 h-4 ml-2" />
+            </Button>
           </div>
         </div>
       </section>
@@ -230,8 +407,8 @@ function App() {
       {/* Serviços */}
       <section id="servicos" className="py-20 px-4 sm:px-6 lg:px-8 bg-white/50">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">
+          <div className="text-center mb-16 animate-fadeInUp">
+            <h2 className="text-4xl font-bold text-gray-900 mb-4 gradient-text">
               Serviços Especializados
             </h2>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto mb-12">
@@ -240,11 +417,11 @@ function App() {
             
             {/* Gallery Images */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
-              <div className="relative group">
+              <div className="relative group animate-slideInLeft">
                 <img 
                   src="https://images.unsplash.com/photo-1632345031435-8727f6897d53" 
                   alt="Serviço profissional de manicure"
-                  className="w-full h-64 object-cover rounded-lg shadow-lg group-hover:shadow-xl transition-shadow"
+                  className="w-full h-64 object-cover rounded-lg shadow-lg hover-lift"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent rounded-lg"></div>
                 <div className="absolute bottom-4 left-4 text-white">
@@ -253,25 +430,25 @@ function App() {
                 </div>
               </div>
               
-              <div className="relative group">
+              <div className="relative group animate-slideInRight">
                 <img 
-                  src="https://images.unsplash.com/photo-1619607146034-5a05296c8f9a" 
-                  alt="Variedade de esmaltes"
-                  className="w-full h-64 object-cover rounded-lg shadow-lg group-hover:shadow-xl transition-shadow"
+                  src="https://images.pexels.com/photos/6724357/pexels-photo-6724357.jpeg" 
+                  alt="Ambiente profissional"
+                  className="w-full h-64 object-cover rounded-lg shadow-lg hover-lift"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent rounded-lg"></div>
                 <div className="absolute bottom-4 left-4 text-white">
-                  <h3 className="text-lg font-semibold">Cores Exclusivas</h3>
-                  <p className="text-sm opacity-90">Ampla variedade de esmaltes premium</p>
+                  <h3 className="text-lg font-semibold">Ambiente Acolhedor</h3>
+                  <p className="text-sm opacity-90">Espaço confortável e relaxante</p>
                 </div>
               </div>
             </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <Card className="hover:shadow-lg transition-shadow border-rose-100">
+            <Card className="hover-lift transition-all duration-300 border-rose-100 animate-fadeInUp">
               <CardHeader>
-                <div className="w-12 h-12 bg-rose-100 rounded-lg flex items-center justify-center mb-4">
+                <div className="w-12 h-12 bg-rose-100 rounded-lg flex items-center justify-center mb-4 animate-float">
                   <Sparkles className="w-6 h-6 text-rose-500" />
                 </div>
                 <CardTitle className="text-rose-900">Manicure Clássica</CardTitle>
@@ -289,9 +466,9 @@ function App() {
               </CardContent>
             </Card>
 
-            <Card className="hover:shadow-lg transition-shadow border-pink-100">
+            <Card className="hover-lift transition-all duration-300 border-pink-100 animate-fadeInUp" style={{animationDelay: '0.1s'}}>
               <CardHeader>
-                <div className="w-12 h-12 bg-pink-100 rounded-lg flex items-center justify-center mb-4">
+                <div className="w-12 h-12 bg-pink-100 rounded-lg flex items-center justify-center mb-4 animate-float" style={{animationDelay: '0.5s'}}>
                   <Heart className="w-6 h-6 text-pink-500" />
                 </div>
                 <CardTitle className="text-pink-900">Manutenção</CardTitle>
@@ -309,9 +486,9 @@ function App() {
               </CardContent>
             </Card>
 
-            <Card className="hover:shadow-lg transition-shadow border-blue-100">
+            <Card className="hover-lift transition-all duration-300 border-blue-100 animate-fadeInUp" style={{animationDelay: '0.2s'}}>
               <CardHeader>
-                <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
+                <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4 animate-float" style={{animationDelay: '1s'}}>
                   <Star className="w-6 h-6 text-blue-400" />
                 </div>
                 <CardTitle className="text-blue-900">Nail Art</CardTitle>
@@ -332,11 +509,57 @@ function App() {
         </div>
       </section>
 
+      {/* Testimonials */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16 animate-fadeInUp">
+            <Badge className="mb-4 bg-rose-100 text-rose-700 border-rose-200">
+              <Users className="w-4 h-4 mr-2" />
+              Depoimentos
+            </Badge>
+            <h2 className="text-4xl font-bold text-gray-900 mb-4 gradient-text">
+              O que dizem minhas clientes
+            </h2>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+              Feedbacks reais de quem já experimentou meus serviços
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {testimonials.map((testimonial, index) => (
+              <Card 
+                key={testimonial.id} 
+                className={`hover-lift border-0 shadow-lg animate-fadeInUp`}
+                style={{animationDelay: `${index * 0.2}s`}}
+              >
+                <CardContent className="p-6">
+                  <Quote className="w-8 h-8 text-rose-400 mb-4" />
+                  <p className="text-gray-700 mb-4 italic">
+                    "{testimonial.text}"
+                  </p>
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <div className="font-semibold text-gray-900">{testimonial.name}</div>
+                      <div className="text-sm text-gray-500">{testimonial.service}</div>
+                    </div>
+                    <div className="flex">
+                      {[...Array(testimonial.rating)].map((_, i) => (
+                        <Star key={i} className="w-4 h-4 text-yellow-400 fill-current" />
+                      ))}
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Agendamento */}
-      <section id="agendamento" className="py-20 px-4 sm:px-6 lg:px-8">
+      <section id="agendamento" className="py-20 px-4 sm:px-6 lg:px-8 bg-white/50">
         <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">
+          <div className="text-center mb-16 animate-fadeInUp">
+            <h2 className="text-4xl font-bold text-gray-900 mb-4 gradient-text">
               Agende seu Horário
             </h2>
             <p className="text-xl text-gray-600">
@@ -346,10 +569,10 @@ function App() {
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             {/* Calendário */}
-            <div className="space-y-6">
+            <div className="space-y-6 animate-slideInLeft">
               <div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-4">Escolha uma data</h3>
-                <div className="bg-white rounded-lg shadow-md p-6">
+                <div className="bg-white rounded-lg shadow-md p-6 hover-lift">
                   <CalendarComponent
                     mode="single"
                     selected={selectedDate}
@@ -363,33 +586,45 @@ function App() {
                 </p>
               </div>
 
-              {selectedDate && availableSlots.length > 0 && (
-                <div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-4">Horários disponíveis</h3>
-                  <div className="grid grid-cols-3 gap-2">
-                    {availableSlots.map((slot) => (
-                      <Button
-                        key={slot}
-                        variant={selectedTime === slot ? "default" : "outline"}
-                        onClick={() => setSelectedTime(slot)}
-                        className={selectedTime === slot ? 
-                          "bg-rose-500 hover:bg-rose-600" : 
-                          "border-rose-200 text-rose-600 hover:bg-rose-50"
-                        }
-                      >
-                        {slot}
-                      </Button>
-                    ))}
-                  </div>
+              {selectedDate && (
+                <div className="animate-fadeInUp">
+                  <h3 className="text-xl font-semibold text-gray-900 mb-4">
+                    Horários disponíveis
+                    {isLoading && <span className="loading-dots ml-2"></span>}
+                  </h3>
+                  {isLoading ? (
+                    <div className="grid grid-cols-3 gap-2">
+                      {[...Array(6)].map((_, i) => (
+                        <div key={i} className="h-10 shimmer rounded-md"></div>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="grid grid-cols-3 gap-2">
+                      {availableSlots.map((slot, index) => (
+                        <Button
+                          key={slot}
+                          variant={selectedTime === slot ? "default" : "outline"}
+                          onClick={() => setSelectedTime(slot)}
+                          className={`hover-scale animate-fadeInUp ${selectedTime === slot ? 
+                            "bg-rose-500 hover:bg-rose-600" : 
+                            "border-rose-200 text-rose-600 hover:bg-rose-50"
+                          }`}
+                          style={{animationDelay: `${index * 0.1}s`}}
+                        >
+                          {slot}
+                        </Button>
+                      ))}
+                    </div>
+                  )}
                 </div>
               )}
             </div>
 
             {/* Formulário de agendamento */}
-            <div className="space-y-6">
+            <div className="space-y-6 animate-slideInRight">
               <div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-4">Seus dados</h3>
-                <div className="bg-white rounded-lg shadow-md p-6 space-y-4">
+                <div className="bg-white rounded-lg shadow-md p-6 space-y-4 hover-lift">
                   <div>
                     <Label htmlFor="name">Nome completo *</Label>
                     <Input
@@ -425,7 +660,7 @@ function App() {
                   </div>
 
                   {selectedDate && selectedTime && (
-                    <div className="bg-rose-50 border border-rose-200 rounded-lg p-4">
+                    <div className="bg-rose-50 border border-rose-200 rounded-lg p-4 animate-fadeInUp">
                       <h4 className="font-semibold text-rose-900 mb-2">Resumo do agendamento:</h4>
                       <p className="text-rose-700">
                         <strong>Data:</strong> {selectedDate.toLocaleDateString('pt-BR')}
@@ -438,11 +673,17 @@ function App() {
                   
                   <Button 
                     onClick={handleBooking}
-                    className="w-full bg-gradient-to-r from-rose-400 to-pink-400 hover:from-rose-500 hover:to-pink-500"
-                    disabled={!selectedDate || !selectedTime || !formData.name || !formData.phone}
+                    className="w-full bg-gradient-to-r from-rose-400 to-pink-400 hover:from-rose-500 hover:to-pink-500 hover-lift"
+                    disabled={!selectedDate || !selectedTime || !formData.name || !formData.phone || isLoading}
                   >
-                    <Calendar className="w-4 h-4 mr-2" />
-                    Confirmar Agendamento
+                    {isLoading ? (
+                      <span className="loading-dots">Agendando</span>
+                    ) : (
+                      <>
+                        <Calendar className="w-4 h-4 mr-2" />
+                        Confirmar Agendamento
+                      </>
+                    )}
                   </Button>
                 </div>
               </div>
@@ -452,16 +693,16 @@ function App() {
       </section>
 
       {/* Contato */}
-      <section id="contato" className="py-20 px-4 sm:px-6 lg:px-8 bg-white/50">
+      <section id="contato" className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-4xl font-bold text-gray-900 mb-8">
+          <h2 className="text-4xl font-bold text-gray-900 mb-8 gradient-text animate-fadeInUp">
             Entre em Contato
           </h2>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <Card className="hover:shadow-lg transition-shadow">
+            <Card className="hover-lift transition-all duration-300 animate-slideInLeft">
               <CardHeader>
-                <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mx-auto mb-4">
+                <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mx-auto mb-4 animate-float">
                   <Phone className="w-6 h-6 text-green-500" />
                 </div>
                 <CardTitle>WhatsApp</CardTitle>
@@ -469,15 +710,15 @@ function App() {
               </CardHeader>
               <CardContent>
                 <p className="text-gray-600 mb-4">(11) 96306-5438</p>
-                <Button onClick={openWhatsApp} className="bg-green-500 hover:bg-green-600">
+                <Button onClick={openWhatsApp} className="bg-green-500 hover:bg-green-600 hover-scale">
                   Enviar Mensagem
                 </Button>
               </CardContent>
             </Card>
 
-            <Card className="hover:shadow-lg transition-shadow">
+            <Card className="hover-lift transition-all duration-300 animate-slideInRight">
               <CardHeader>
-                <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-4">
+                <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-4 animate-float" style={{animationDelay: '0.5s'}}>
                   <Clock className="w-6 h-6 text-blue-500" />
                 </div>
                 <CardTitle>Horário de Funcionamento</CardTitle>
@@ -497,28 +738,28 @@ function App() {
       {/* Footer */}
       <footer className="bg-gray-900 text-white py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto text-center">
-          <div className="flex items-center justify-center space-x-2 mb-6">
-            <Sparkles className="h-8 w-8 text-rose-400" />
+          <div className="flex items-center justify-center space-x-2 mb-6 animate-fadeInUp">
+            <Sparkles className="h-8 w-8 text-rose-400 animate-float" />
             <span className="text-2xl font-bold">Kamile Nails</span>
           </div>
           
-          <p className="text-gray-400 mb-6">
+          <p className="text-gray-400 mb-6 animate-fadeInUp">
             Transformando suas unhas em verdadeiras obras de arte desde 2019
           </p>
           
-          <div className="flex justify-center space-x-6 mb-6">
+          <div className="flex justify-center space-x-6 mb-6 animate-fadeInUp">
             <Button 
               variant="ghost" 
               size="sm" 
               onClick={openWhatsApp}
-              className="text-gray-400 hover:text-white"
+              className="text-gray-400 hover:text-white hover-scale"
             >
               <Phone className="w-4 h-4 mr-2" />
               WhatsApp
             </Button>
           </div>
           
-          <div className="border-t border-gray-800 pt-6">
+          <div className="border-t border-gray-800 pt-6 animate-fadeInUp">
             <p className="text-gray-500 text-sm">
               © 2024 Kamile Nails. Todos os direitos reservados.
             </p>
