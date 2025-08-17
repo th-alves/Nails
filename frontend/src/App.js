@@ -605,6 +605,15 @@ function App() {
             <div className="space-y-6 animate-slideInLeft">
               <div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-4">Escolha uma data</h3>
+                
+                {/* Aviso sobre disponibilidade */}
+                <div className="bg-rose-50 border border-rose-200 rounded-lg p-3 mb-4">
+                  <p className="text-sm text-rose-700">
+                    <strong>💡 Dica:</strong> Atendemos apenas nos dias úteis (segunda à sexta). 
+                    Use as setas do calendário para navegar até a próxima semana se não vir datas disponíveis.
+                  </p>
+                </div>
+                
                 <div className="bg-white rounded-lg shadow-md p-3 md:p-6 hover-lift relative">
                   {isLoading && (
                     <div className="absolute inset-0 bg-white/70 backdrop-blur-sm rounded-lg flex items-center justify-center z-10">
