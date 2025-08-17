@@ -616,6 +616,7 @@ function App() {
                     selected={selectedDate}
                     onSelect={handleDateSelect}
                     disabled={(date) => !isDateAvailable(date)}
+                    defaultMonth={getNextMonday()}
                     className="w-full mx-auto max-w-sm md:max-w-none"
                   />
                 </div>
