@@ -595,19 +595,19 @@ function App() {
                     {isLoading && <span className="loading-dots ml-2"></span>}
                   </h3>
                   {isLoading ? (
-                    <div className="grid grid-cols-3 gap-2">
+                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                       {[...Array(6)].map((_, i) => (
                         <div key={i} className="h-10 shimmer rounded-md"></div>
                       ))}
                     </div>
                   ) : (
-                    <div className="grid grid-cols-3 gap-2">
+                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                       {availableSlots.map((slot, index) => (
                         <Button
                           key={slot}
                           variant={selectedTime === slot ? "default" : "outline"}
                           onClick={() => setSelectedTime(slot)}
-                          className={`hover-scale animate-fadeInUp ${selectedTime === slot ?
+                          className={`hover-scale animate-fadeInUp text-sm ${selectedTime === slot ?
                             "bg-rose-500 hover:bg-rose-600" :
                             "border-rose-200 text-rose-600 hover:bg-rose-50"
                             }`}
