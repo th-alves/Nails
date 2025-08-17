@@ -610,7 +610,8 @@ function App() {
                   />
                 </div>
                 <p className="text-sm text-gray-500 mt-2">
-                  * Atendemos de segunda à sexta, das 8h às 18h
+                  * Atendemos de <strong>segunda à sexta</strong>, das 8h às 18h<br/>
+                  <span className="text-rose-600">Use as setas para navegar para próximas semanas</span>
                 </p>
               </div>
 
