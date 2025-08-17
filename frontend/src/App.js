@@ -145,8 +145,18 @@ function App() {
       </header>
 
       {/* Hero Section */}
-      <section id="inicio" className="relative py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto text-center">
+      <section id="inicio" className="relative py-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
+        {/* Background Image */}
+        <div className="absolute inset-0 z-0">
+          <img 
+            src="https://images.unsplash.com/photo-1722872112546-936593441be8" 
+            alt="Elegant manicure background"
+            className="w-full h-full object-cover opacity-20"
+          />
+          <div className="absolute inset-0 bg-gradient-to-br from-rose-50/90 via-pink-50/90 to-blue-50/90"></div>
+        </div>
+        
+        <div className="max-w-7xl mx-auto text-center relative z-10">
           <div className="mb-8">
             <Badge className="mb-4 bg-rose-100 text-rose-700 border-rose-200">
               💅 Especialista em Manicure
