@@ -175,6 +175,12 @@ function App() {
       await axios.post(`${API_BASE_URL}/api/bookings`, bookingData);
 
       toast.success('Agendamento realizado com sucesso!');
+      
+      // Preparar mensagem do WhatsApp ANTES de resetar os dados
+      const message = `Olá! Acabei de agendar um horário para manicure:\n\nData: ${selectedDate.toLocaleDateString('pt-BR')}\nHorário: ${selectedTime}\nNome: ${formData.name}\nTelefone: ${formData.phone}`;
+      const whatsappUrl = `https://wa.me/5511963065438?text=${encodeURIComponent(message)}`;
+      
+      // Reset form data
       setIsDialogOpen(false);
       setFormData({ name: '', phone: '', notes: '' });
       setSelectedDate(null);
@@ -182,8 +188,6 @@ function App() {
       fetchBookedDates();
 
       // Abrir WhatsApp com mensagem pré-definida
-      const message = `Olá! Acabei de agendar um horário para manicure:\n\nData: ${selectedDate.toLocaleDateString('pt-BR')}\nHorário: ${selectedTime}\nNome: ${formData.name}\nTelefone: ${formData.phone}`;
-      const whatsappUrl = `https://wa.me/5511963065438?text=${encodeURIComponent(message)}`;
       window.open(whatsappUrl, '_blank');
 
     } catch (error) {
