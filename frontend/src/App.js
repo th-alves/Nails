@@ -52,7 +52,11 @@ function App() {
   // Verificar se uma data está disponível (não é fim de semana nem feriado)
   const isDateAvailable = (date) => {
     const day = date.getDay();
-    return day !== 0 && day !== 6; // 0 = domingo, 6 = sábado
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // Reset time to start of day
+    
+    // Must be weekday (Monday-Friday) and not in the past
+    return day !== 0 && day !== 6 && date >= today;
   };
 
   // Lidar com seleção de data no calendário
