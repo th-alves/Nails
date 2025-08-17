@@ -574,7 +574,7 @@ function App() {
                     mode="single"
                     selected={selectedDate}
                     onSelect={handleDateSelect}
-                    disabled={(date) => !isDateAvailable(date) || date < new Date()}
+                    disabled={(date) => !isDateAvailable(date)}
                     className="w-full"
                   />
                 </div>
