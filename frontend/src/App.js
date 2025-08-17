@@ -106,12 +106,17 @@ function App() {
 
   // Verificar se uma data está disponível (não é fim de semana nem feriado)
   const isDateAvailable = (date) => {
+    if (!date) return false;
+    
     const day = date.getDay();
     const today = new Date();
     today.setHours(0, 0, 0, 0); // Reset time to start of day
+    
+    const dateToCheck = new Date(date);
+    dateToCheck.setHours(0, 0, 0, 0); // Reset time to start of day
 
-    // Must be weekday (Monday-Friday) and not in the past
-    return day !== 0 && day !== 6 && date >= today;
+    // Must be weekday (Monday-Friday: 1-5) and not in the past
+    return day >= 1 && day <= 5 && dateToCheck >= today;
   };
 
   // Lidar com seleção de data no calendário
