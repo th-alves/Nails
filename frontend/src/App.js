@@ -218,9 +218,38 @@ function App() {
             <h2 className="text-4xl font-bold text-gray-900 mb-4">
               Serviços Especializados
             </h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto mb-12">
               Ofereço serviços completos de manicure com técnicas modernas e produtos de qualidade premium
             </p>
+            
+            {/* Gallery Images */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+              <div className="relative group">
+                <img 
+                  src="https://images.unsplash.com/photo-1632345031435-8727f6897d53" 
+                  alt="Serviço profissional de manicure"
+                  className="w-full h-64 object-cover rounded-lg shadow-lg group-hover:shadow-xl transition-shadow"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent rounded-lg"></div>
+                <div className="absolute bottom-4 left-4 text-white">
+                  <h3 className="text-lg font-semibold">Atendimento Profissional</h3>
+                  <p className="text-sm opacity-90">Cuidado dedicado e personalizado</p>
+                </div>
+              </div>
+              
+              <div className="relative group">
+                <img 
+                  src="https://images.unsplash.com/photo-1619607146034-5a05296c8f9a" 
+                  alt="Variedade de esmaltes"
+                  className="w-full h-64 object-cover rounded-lg shadow-lg group-hover:shadow-xl transition-shadow"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent rounded-lg"></div>
+                <div className="absolute bottom-4 left-4 text-white">
+                  <h3 className="text-lg font-semibold">Cores Exclusivas</h3>
+                  <p className="text-sm opacity-90">Ampla variedade de esmaltes premium</p>
+                </div>
+              </div>
+            </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
