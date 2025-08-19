@@ -102,7 +102,7 @@
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
 
-user_problem_statement: "Teste a API do sistema de agendamento da Kamile Nails. Preciso verificar: API Health Check, obter horários disponíveis, criar agendamento, listar agendamentos, obter agendamento específico, cancelar agendamento, dashboard stats. Use dados de teste realistas e teste cenários de erro."
+user_problem_statement: "Teste completo do sistema de agendamento da Kamile Nails focando na funcionalidade de horários ocupados. Cenário específico: 1. Fazer um agendamento para 2025-08-18 às 09:00 com cliente 'Maria Silva' 2. Verificar se o horário 09:00 não aparece mais disponível para a mesma data 3. Verificar se outros horários ainda estão disponíveis no mesmo dia 4. Tentar agendar o mesmo horário novamente e confirmar se retorna erro 409 (conflito) 5. Testar com múltiplos agendamentos no mesmo dia para diferentes horários"
 
 backend:
   - task: "API Health Check"
