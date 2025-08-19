@@ -203,22 +203,30 @@ function App() {
     } catch (error) {
       console.error('Erro ao fazer agendamento:', error);
       
-      // Tratar diferentes tipos de erro
+      // Tratar diferentes tipos de erro em português
       if (error.response) {
         const status = error.response.status;
         const message = error.response.data?.detail || 'Erro desconhecido';
         
         if (status === 409) {
-          toast.error('Este horário já foi agendado. Escolha outro horário.');
+          toast.error('❌ Este horário já foi agendado por outra cliente. Por favor, escolha outro horário.');
         } else if (status === 400) {
-          toast.error(`Erro na validação: ${message}`);
+          if (message.includes('weekend') || message.includes('weekends')) {
+            toast.error('❌ Não atendemos nos finais de semana. Escolha um dia de segunda à sexta.');
+          } else if (message.includes('past') || message.includes('passado')) {
+            toast.error('❌ Não é possível agendar em datas passadas. Escolha uma data futura.');
+          } else {
+            toast.error(`❌ Dados inválidos: ${message}`);
+          }
+        } else if (status === 422) {
+          toast.error('❌ Por favor, verifique se todos os dados estão corretos (nome, telefone, etc.).');
         } else {
-          toast.error(`Erro no servidor: ${message}`);
+          toast.error(`❌ Erro no servidor. Tente novamente em alguns instantes.`);
         }
       } else if (error.request) {
-        toast.error('Erro de conexão. Verifique sua internet e tente novamente.');
+        toast.error('❌ Erro de conexão. Verifique sua internet e tente novamente.');
       } else {
-        toast.error('Erro ao fazer agendamento. Tente novamente.');
+        toast.error('❌ Erro inesperado. Recarregue a página e tente novamente.');
       }
     } finally {
       setIsLoading(false);
