@@ -138,16 +138,17 @@ function App() {
     today.setHours(0, 0, 0, 0);
 
     if (day === 0 || day === 6) {
-      toast.error('Não atendemos nos finais de semana');
+      toast.error('❌ Não atendemos nos finais de semana. Escolha um dia de segunda à sexta.');
       return;
     }
 
     if (date < today) {
-      toast.error('Não é possível agendar em datas passadas');
+      toast.error('❌ Não é possível agendar em datas passadas. Escolha uma data futura.');
       return;
     }
 
     setSelectedDate(date);
+    setSelectedTime(''); // Reset selected time
     setIsLoading(true);
 
     try {
@@ -157,8 +158,31 @@ function App() {
       setAvailableSlots(response.data);
     } catch (error) {
       console.error('Erro ao buscar horários disponíveis:', error);
-      // Fallback to generate slots locally if API fails
-      setAvailableSlots(generateTimeSlots());
+      
+      // Mostrar erro específico ao usuário
+      if (error.response) {
+        const status = error.response.status;
+        const message = error.response.data?.detail || '';
+        
+        if (status === 400) {
+          if (message.includes('weekend') || message.includes('weekends')) {
+            toast.error('❌ Não atendemos nos finais de semana.');
+            setAvailableSlots([]);
+          } else if (message.includes('past') || message.includes('passado')) {
+            toast.error('❌ Não é possível agendar em datas passadas.');
+            setAvailableSlots([]);
+          } else {
+            toast.error('❌ Erro ao carregar horários. Tente novamente.');
+            setAvailableSlots([]);
+          }
+        } else {
+          toast.error('❌ Erro ao carregar horários disponíveis.');
+          setAvailableSlots([]);
+        }
+      } else {
+        toast.error('❌ Erro de conexão ao carregar horários.');
+        setAvailableSlots([]);
+      }
     } finally {
       setIsLoading(false);
     }
