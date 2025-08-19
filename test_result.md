@@ -215,6 +215,20 @@ test_plan:
   test_all: true
   test_priority: "high_first"
 
+  - task: "Occupied Slots Logic Test"
+    implemented: true
+    working: true
+    file: "/app/backend/server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: true
+          agent: "testing"
+          comment: "Comprehensive occupied slots functionality test completed successfully. Tested specific scenario with Maria Silva booking at 09:00 on 2025-08-25. All core functionality working: 1) Initial slots available (10 slots), 2) Booking creation successful, 3) Occupied slot (09:00) correctly removed from available slots, 4) Other slots remain available, 5) Duplicate booking correctly returns 409 conflict error, 6) Multiple bookings on same day work correctly (Ana Costa 10:00, Carla Mendes 14:00, Beatriz Lima 16:00), 7) Final verification shows all occupied slots properly removed. Success rate: 100% (8/8 tests passed after verification)."
+
 agent_communication:
     - agent: "testing"
       message: "Comprehensive backend API testing completed successfully. All 7 core API endpoints (health, available-slots, bookings CRUD, dashboard stats) are working perfectly. Tested with realistic data as requested: Ana Silva, (11) 98765-4321, nail art colorida. All error scenarios properly handled including weekend bookings, duplicate slots, and invalid data validation. API is production-ready."
+    - agent: "testing"
+      message: "Specific occupied slots functionality test completed with excellent results. Tested the exact scenario requested by user: Maria Silva booking at 09:00, slot removal verification, conflict handling (409 error), and multiple bookings on same day. All functionality working perfectly. The booking system correctly manages occupied time slots and prevents double bookings. Used realistic Brazilian data as requested. System is ready for production use."
