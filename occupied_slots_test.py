@@ -17,7 +17,7 @@ class OccupiedSlotsTest:
     def __init__(self):
         # Use the correct backend URL from frontend/.env
         self.base_url = "https://5c30e83b-760d-4297-97a4-cbd5074397e3.preview.emergentagent.com"
-        self.test_date = "2025-08-18"  # Monday - valid business day
+        self.test_date = "2025-08-25"  # Monday - valid business day (future date)
         self.test_results = []
         
     def log_test(self, test_name, success, details):
