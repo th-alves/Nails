@@ -38,15 +38,18 @@ class OccupiedSlotsTest:
         
         try:
             if method == 'GET':
-                response = requests.get(url, headers=headers, params=params)
+                response = requests.get(url, headers=headers, params=params, timeout=10)
             elif method == 'POST':
-                response = requests.post(url, json=data, headers=headers)
+                response = requests.post(url, json=data, headers=headers, timeout=10)
             elif method == 'PUT':
-                response = requests.put(url, json=data, headers=headers)
+                response = requests.put(url, json=data, headers=headers, timeout=10)
                 
             return response
+        except requests.exceptions.RequestException as e:
+            print(f"Erro na requisição para {url}: {str(e)}")
+            return None
         except Exception as e:
-            print(f"Erro na requisição: {str(e)}")
+            print(f"Erro inesperado: {str(e)}")
             return None
     
     def test_1_initial_available_slots(self):
