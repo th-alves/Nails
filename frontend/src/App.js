@@ -498,8 +498,9 @@ function App() {
               variant="outline"
               className="border-rose-300 text-rose-600 hover:bg-rose-50 hover-lift"
             >
-              Ver Mais Trabalhos no Instagram
-              <Instagram className="w-4 h-4 ml-2" />
+              <span className="hidden sm:inline">Ver Mais Trabalhos no </span>
+              <Instagram className="w-4 h-4 sm:ml-2" />
+              <span className="sm:hidden">Instagram</span>
             </Button>
           </div>
         </div>
