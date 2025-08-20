@@ -285,37 +285,45 @@ function App() {
               <a href="#contato" className="text-gray-700 hover:text-rose-500 transition-colors hover-lift">Contato</a>
             </nav>
             
-            {/* Menu mobile */}
-            <div className="md:hidden relative">
-              <select 
-                onChange={(e) => {
-                  if (e.target.value) {
-                    document.getElementById(e.target.value)?.scrollIntoView({ behavior: 'smooth' });
-                    e.target.value = ''; // Reset selection
-                  }
-                }}
-                className="appearance-none bg-gradient-to-r from-rose-400 to-pink-400 text-white text-sm font-medium rounded-lg px-4 py-2 pr-8 shadow-lg hover:from-rose-500 hover:to-pink-500 transition-all duration-300 cursor-pointer focus:ring-2 focus:ring-rose-300 focus:outline-none"
-                defaultValue=""
-              >
-                <option value="" disabled className="bg-white text-gray-900">Menu</option>
-                <option value="inicio" className="bg-white text-gray-900">🏠 Início</option>
-                <option value="sobre" className="bg-white text-gray-900">👩‍💼 Sobre</option>
-                <option value="servicos" className="bg-white text-gray-900">✨ Serviços</option>
-                <option value="portfolio" className="bg-white text-gray-900">🎨 Portfolio</option>
-                <option value="agendamento" className="bg-white text-gray-900">📅 Agendamento</option>
-                <option value="contato" className="bg-white text-gray-900">📞 Contato</option>
-              </select>
-              {/* Custom dropdown arrow */}
-              <div className="absolute right-2 top-1/2 transform -translate-y-1/2 pointer-events-none">
-                <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
-                </svg>
+            <div className="flex items-center space-x-3">
+              {/* Menu mobile - apenas ícone */}
+              <div className="md:hidden relative">
+                <select 
+                  onChange={(e) => {
+                    if (e.target.value) {
+                      document.getElementById(e.target.value)?.scrollIntoView({ behavior: 'smooth' });
+                      e.target.value = ''; // Reset selection
+                    }
+                  }}
+                  className="appearance-none bg-gradient-to-r from-rose-400 to-pink-400 text-white rounded-lg w-10 h-10 shadow-lg hover:from-rose-500 hover:to-pink-500 transition-all duration-300 cursor-pointer focus:ring-2 focus:ring-rose-300 focus:outline-none flex items-center justify-center"
+                  defaultValue=""
+                  title="Menu de navegação"
+                >
+                  <option value="" disabled className="bg-white text-gray-900">Menu</option>
+                  <option value="inicio" className="bg-white text-gray-900">🏠 Início</option>
+                  <option value="sobre" className="bg-white text-gray-900">👩‍💼 Sobre</option>
+                  <option value="servicos" className="bg-white text-gray-900">✨ Serviços</option>
+                  <option value="portfolio" className="bg-white text-gray-900">🎨 Portfolio</option>
+                  <option value="agendamento" className="bg-white text-gray-900">📅 Agendamento</option>
+                  <option value="contato" className="bg-white text-gray-900">📞 Contato</option>
+                </select>
+                {/* Hamburger icon overlay */}
+                <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                  <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                  </svg>
+                </div>
               </div>
+              
+              {/* WhatsApp button - apenas ícone */}
+              <Button 
+                onClick={openWhatsApp} 
+                className="bg-green-500 hover:bg-green-600 animate-slideInRight hover-scale w-10 h-10 p-0 rounded-lg shadow-lg transition-all duration-300"
+                title="Falar no WhatsApp"
+              >
+                <Phone className="w-5 h-5" />
+              </Button>
             </div>
-            <Button onClick={openWhatsApp} className="bg-green-500 hover:bg-green-600 animate-slideInRight hover-scale">
-              <Phone className="w-4 h-4 mr-2" />
-              WhatsApp
-            </Button>
           </div>
         </div>
       </header>
