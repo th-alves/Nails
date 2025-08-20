@@ -894,7 +894,7 @@ function App() {
               className="text-gray-400 hover:text-white hover-scale"
             >
               <Phone className="w-4 h-4 mr-2" />
-              WhatsApp
+              <span className="hidden sm:inline">WhatsApp</span>
             </Button>
           </div>
 
