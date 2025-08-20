@@ -373,7 +373,7 @@ function App() {
               className="border-rose-300 text-rose-600 hover:bg-rose-50 px-8 py-3 hover-lift"
             >
               <Phone className="w-5 h-5 mr-2" />
-              Falar no WhatsApp
+              <span className="hidden sm:inline">Falar no </span>WhatsApp
             </Button>
           </div>
 
