@@ -849,7 +849,8 @@ function App() {
               <CardContent>
                 <p className="text-gray-600 mb-4">(11) 96306-5438</p>
                 <Button onClick={openWhatsApp} className="bg-green-500 hover:bg-green-600 hover-scale">
-                  Enviar Mensagem
+                  <Phone className="w-4 h-4 mr-2" />
+                  <span className="hidden sm:inline">Enviar </span>Mensagem
                 </Button>
               </CardContent>
             </Card>
