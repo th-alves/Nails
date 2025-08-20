@@ -286,20 +286,31 @@ function App() {
             </nav>
             
             {/* Menu mobile */}
-            <div className="md:hidden">
+            <div className="md:hidden relative">
               <select 
-                onChange={(e) => document.getElementById(e.target.value)?.scrollIntoView({ behavior: 'smooth' })}
-                className="text-sm bg-white border border-gray-300 rounded-md px-2 py-1"
+                onChange={(e) => {
+                  if (e.target.value) {
+                    document.getElementById(e.target.value)?.scrollIntoView({ behavior: 'smooth' });
+                    e.target.value = ''; // Reset selection
+                  }
+                }}
+                className="appearance-none bg-gradient-to-r from-rose-400 to-pink-400 text-white text-sm font-medium rounded-lg px-4 py-2 pr-8 shadow-lg hover:from-rose-500 hover:to-pink-500 transition-all duration-300 cursor-pointer focus:ring-2 focus:ring-rose-300 focus:outline-none"
                 defaultValue=""
               >
-                <option value="">Menu</option>
-                <option value="inicio">Início</option>
-                <option value="sobre">Sobre</option>
-                <option value="servicos">Serviços</option>
-                <option value="portfolio">Portfolio</option>
-                <option value="agendamento">Agendamento</option>
-                <option value="contato">Contato</option>
+                <option value="" disabled className="bg-white text-gray-900">Menu</option>
+                <option value="inicio" className="bg-white text-gray-900">🏠 Início</option>
+                <option value="sobre" className="bg-white text-gray-900">👩‍💼 Sobre</option>
+                <option value="servicos" className="bg-white text-gray-900">✨ Serviços</option>
+                <option value="portfolio" className="bg-white text-gray-900">🎨 Portfolio</option>
+                <option value="agendamento" className="bg-white text-gray-900">📅 Agendamento</option>
+                <option value="contato" className="bg-white text-gray-900">📞 Contato</option>
               </select>
+              {/* Custom dropdown arrow */}
+              <div className="absolute right-2 top-1/2 transform -translate-y-1/2 pointer-events-none">
+                <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+              </div>
             </div>
             <Button onClick={openWhatsApp} className="bg-green-500 hover:bg-green-600 animate-slideInRight hover-scale">
               <Phone className="w-4 h-4 mr-2" />
