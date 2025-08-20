@@ -297,9 +297,9 @@ function App() {
                   }}
                   className="appearance-none bg-gradient-to-r from-rose-400 to-pink-400 text-white rounded-lg w-10 h-10 shadow-lg hover:from-rose-500 hover:to-pink-500 transition-all duration-300 cursor-pointer focus:ring-2 focus:ring-rose-300 focus:outline-none flex items-center justify-center"
                   defaultValue=""
-                  title="Menu de navegação"
+                  title=""
                 >
-                  <option value="" disabled className="bg-white text-gray-900">Menu</option>
+                  <option value="" disabled className="bg-white text-gray-900"></option>
                   <option value="inicio" className="bg-white text-gray-900">🏠 Início</option>
                   <option value="sobre" className="bg-white text-gray-900">👩‍💼 Sobre</option>
                   <option value="servicos" className="bg-white text-gray-900">✨ Serviços</option>
