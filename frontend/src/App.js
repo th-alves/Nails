@@ -698,7 +698,7 @@ function App() {
               {selectedDate && (
                 <div className="animate-fadeInUp">
                   <h3 className="text-xl font-semibold text-gray-900 mb-4">
-                    Horários disponíveis
+                    Horários disponíveis para {selectedDate.toLocaleDateString('pt-BR')}
                     {isLoading && <span className="loading-dots ml-2"></span>}
                   </h3>
                   {isLoading ? (
@@ -706,6 +706,14 @@ function App() {
                       {[...Array(6)].map((_, i) => (
                         <div key={i} className="h-10 shimmer rounded-md"></div>
                       ))}
+                    </div>
+                  ) : availableSlots.length === 0 ? (
+                    <div className="bg-orange-50 border border-orange-200 rounded-lg p-4 text-center">
+                      <p className="text-orange-700 font-medium mb-2">😔 Nenhum horário disponível</p>
+                      <p className="text-orange-600 text-sm">
+                        Todos os horários já foram agendados para esta data. 
+                        Tente escolher outro dia ou entre em contato pelo WhatsApp.
+                      </p>
                     </div>
                   ) : (
                     <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
