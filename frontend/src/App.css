@@ -328,7 +328,30 @@ html {
   --rdp-cell-size: 40px;
   --rdp-accent-color: #f43f5e;
   --rdp-background-color: #fef2f2;
-  margin: 0;
+  margin: 0 auto;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.rdp-months {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.rdp-month {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.rdp-table {
+  width: 100%;
+  max-width: 280px;
+  margin: 0 auto;
 }
 
 /* Mobile calendar adjustments */
@@ -343,11 +366,13 @@ html {
   
   .rdp-month {
     width: 100%;
-    max-width: 320px;
+    max-width: 300px;
+    margin: 0 auto;
   }
   
   .rdp-table {
     width: 100%;
+    max-width: 260px;
   }
   
   .rdp-head_cell,
