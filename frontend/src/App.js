@@ -10,7 +10,7 @@ import { Input } from './components/ui/input';
 import { Label } from './components/ui/label';
 import { Textarea } from './components/ui/textarea';
 import { toast } from 'sonner';
-import kamile from "./images/kamile.png";
+import kamile from "./images/kamile2.jpg";
 import './App.css';
 
 const API_BASE_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
@@ -259,9 +259,13 @@ function App() {
 
   // Abrir WhatsApp para contato direto
   const openWhatsApp = () => {
-    const message = 'Olá! Gostaria de saber mais sobre os serviços da Kamile Nails 💅';
+    const message = 'Olá! Gostaria de saber mais sobre os seus serviços! 💅';
     const whatsappUrl = `https://wa.me/5511963065438?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
+  };
+  const openInstagram = () => {
+    const instaUrl = `https://www.instagram.com/kamilesilvanails/`;
+    window.open(instaUrl, '_blank');
   };
 
   return (
@@ -379,16 +383,16 @@ function App() {
 
           {/* Estatísticas */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-            <div className="text-center animate-slideInLeft hover-lift">
-              <div className="text-3xl font-bold text-rose-500 mb-2 animate-pulse-gentle">2+ Anos</div>
+            <div className="text-center animate-slideInLeft">
+              <div className="text-3xl font-bold text-rose-500 mb-2">2+ Anos</div>
               <div className="text-gray-600">de Experiência</div>
             </div>
-            <div className="text-center animate-fadeInUp hover-lift">
-              <div className="text-3xl font-bold text-pink-500 mb-2 animate-pulse-gentle">1000+</div>
+            <div className="text-center animate-fadeInUp">
+              <div className="text-3xl font-bold text-pink-500 mb-2">1000+</div>
               <div className="text-gray-600">Clientes Satisfeitas</div>
             </div>
-            <div className="text-center animate-slideInRight hover-lift">
-              <div className="text-3xl font-bold text-blue-400 mb-2 animate-pulse-gentle">100%</div>
+            <div className="text-center animate-slideInRight">
+              <div className="text-3xl font-bold text-blue-400 mb-2">100%</div>
               <div className="text-gray-600">Dedicação</div>
             </div>
           </div>
@@ -494,11 +498,11 @@ function App() {
 
           <div className="text-center mt-12 animate-fadeInUp">
             <Button
-              onClick={openWhatsApp}
+              onClick={openInstagram}
               variant="outline"
               className="border-rose-300 text-rose-600 hover:bg-rose-50 hover-lift"
             >
-              <span className="hidden sm:inline">Ver Mais Trabalhos no </span>
+              <span className="hidden sm:inline">Ver mais trabalhos no</span>
               <Instagram className="w-4 h-4 sm:ml-2" />
               <span className="sm:hidden">Instagram</span>
             </Button>
