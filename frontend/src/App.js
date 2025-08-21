@@ -10,7 +10,7 @@ import { Input } from './components/ui/input';
 import { Label } from './components/ui/label';
 import { Textarea } from './components/ui/textarea';
 import { toast } from 'sonner';
-import kamile from "./images/kamile2.jpg";
+import kamile from "./images/kamile.png";
 import './App.css';
 
 const API_BASE_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
@@ -20,21 +20,21 @@ const testimonials = [
   {
     id: 1,
     name: "Maria Silva",
-    text: "Kamile é incrível! Sempre saio de lá com as unhas perfeitas. Atendimento excepcional e um trabalho impecável.",
+    text: "A melhor que tive até agora, afinal, quando conversamos temos muita conexão, eu amo isso!",
     rating: 5,
     service: "Manicure Clássica"
   },
   {
     id: 2,
     name: "Ana Costa",
-    text: "Profissional super dedicada e talentosa. As nail arts que ela faz são verdadeiras obras de arte!",
+    text: "Além de ser uma excelente profissional, é uma pessoa incrível e maravilhosa!",
     rating: 5,
     service: "Nail Art"
   },
   {
     id: 3,
     name: "Julia Santos",
-    text: "Encontrei na Kamile não apenas uma profissional competente, mas uma pessoa que realmente se importa com o cliente.",
+    text: "Adorei muito teu trabalho, perfeição! Estou muito feliz por você deixar minhas unhas impecáveis, nota mil, super indico!",
     rating: 5,
     service: "Manutenção"
   }
@@ -405,7 +405,7 @@ function App() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="animate-slideInLeft">
               <div className="relative">
-                <img src={kamile} alt="Kamile trabalhando" className="w-full h-96 object-cover rounded-2xl shadow-2xl hover-scale" />
+                <img src={kamile} alt="Kamile mostrando as unhas" className="w-full h-96 object-cover rounded-2xl shadow-2xl hover-scale" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent rounded-2xl"></div>
               </div>
             </div>
@@ -895,7 +895,7 @@ function App() {
               variant="ghost"
               size="sm"
               onClick={openWhatsApp}
-              className="text-gray-400 hover:text-white hover-scale"
+              className="text-gray-400 hover:text-black hover-scale"
             >
               <Phone className="w-4 h-4 mr-2" />
               <span className="hidden sm:inline">WhatsApp</span>
@@ -904,7 +904,7 @@ function App() {
 
           <div className="border-t border-gray-800 pt-6 animate-fadeInUp">
             <p className="text-gray-500 text-sm">
-              © 2024 Kamile Nails. Todos os direitos reservados.
+              © 2025 Kamile Nails. Todos os direitos reservados.
             </p>
           </div>
         </div>
