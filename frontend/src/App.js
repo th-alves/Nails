@@ -754,7 +754,8 @@ function App() {
                 <div className="bg-rose-50 border border-rose-200 rounded-lg p-3 mb-4">
                   <p className="text-sm text-rose-700">
                     <strong>💡 Dica:</strong> Atendemos apenas nos dias úteis (segunda à sexta). 
-                    Use as setas do calendário para navegar até a próxima semana se não vir datas disponíveis.
+                    Use as setas do calendário para navegar até encontrar datas disponíveis.
+                    Se não vir datas clicáveis, navegue para o próximo mês.
                   </p>
                 </div>
                 
