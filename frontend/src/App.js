@@ -109,7 +109,18 @@ function App() {
   const getNextMonday = () => {
     const today = new Date();
     const dayOfWeek = today.getDay(); // 0 = Sunday, 1 = Monday, etc.
-    const daysUntilMonday = dayOfWeek === 0 ? 1 : (8 - dayOfWeek); // If Sunday, 1 day; otherwise, days to next Monday
+    
+    // Se hoje é segunda-feira ou depois, vá para a próxima segunda-feira
+    // Se hoje é domingo, vá para amanhã (segunda-feira)
+    let daysUntilMonday;
+    if (dayOfWeek === 0) { // Domingo
+      daysUntilMonday = 1;
+    } else if (dayOfWeek === 1) { // Segunda-feira
+      daysUntilMonday = 0; // Hoje mesmo se for segunda
+    } else { // Terça a sábado
+      daysUntilMonday = 8 - dayOfWeek; // Próxima segunda
+    }
+    
     const nextMonday = new Date(today);
     nextMonday.setDate(today.getDate() + daysUntilMonday);
     return nextMonday;
