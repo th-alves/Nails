@@ -105,25 +105,31 @@ function App() {
     return slots;
   };
 
-  // Função para encontrar a próxima segunda-feira
-  const getNextMonday = () => {
+  // Função para encontrar a próxima segunda-feira disponível
+  const getNextAvailableWeek = () => {
     const today = new Date();
-    const dayOfWeek = today.getDay(); // 0 = Sunday, 1 = Monday, etc.
+    const currentDay = today.getDay();
     
-    // Se hoje é segunda-feira ou depois, vá para a próxima segunda-feira
-    // Se hoje é domingo, vá para amanhã (segunda-feira)
-    let daysUntilMonday;
-    if (dayOfWeek === 0) { // Domingo
-      daysUntilMonday = 1;
-    } else if (dayOfWeek === 1) { // Segunda-feira
-      daysUntilMonday = 0; // Hoje mesmo se for segunda
-    } else { // Terça a sábado
-      daysUntilMonday = 8 - dayOfWeek; // Próxima segunda
+    // Se estamos na segunda metade da semana (quinta-domingo), vá para próxima segunda
+    // Se estamos na primeira metade (segunda-quarta), fique na semana atual
+    let targetDate = new Date(today);
+    
+    if (currentDay === 0) { // Domingo
+      targetDate.setDate(today.getDate() + 1); // Próxima segunda
+    } else if (currentDay >= 4) { // Quinta a sábado
+      const daysToMonday = 8 - currentDay;
+      targetDate.setDate(today.getDate() + daysToMonday);
+    } else { // Segunda a quarta
+      // Se já passou da metade do dia, vá para próxima semana
+      const hour = today.getHours();
+      if (hour >= 14) { // Depois das 14h
+        const daysToMonday = 8 - currentDay;
+        targetDate.setDate(today.getDate() + daysToMonday);
+      }
+      // Caso contrário, fica na semana atual
     }
     
-    const nextMonday = new Date(today);
-    nextMonday.setDate(today.getDate() + daysUntilMonday);
-    return nextMonday;
+    return targetDate;
   };
 
   // Verificar se uma data está disponível (não é fim de semana nem feriado)
