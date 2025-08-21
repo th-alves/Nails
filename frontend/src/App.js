@@ -287,33 +287,17 @@ function App() {
             </nav>
             
             <div className="flex items-center space-x-3">
-              {/* Menu mobile - apenas ícone */}
+              {/* Menu mobile - botão hamburger */}
               <div className="md:hidden relative">
-                <select 
-                  onChange={(e) => {
-                    if (e.target.value) {
-                      document.getElementById(e.target.value)?.scrollIntoView({ behavior: 'smooth' });
-                      e.target.value = ''; // Reset selection
-                    }
-                  }}
-                  className="appearance-none bg-gradient-to-r from-rose-400 to-pink-400 text-white rounded-lg w-10 h-10 shadow-lg hover:from-rose-500 hover:to-pink-500 transition-all duration-300 cursor-pointer focus:ring-2 focus:ring-rose-300 focus:outline-none flex items-center justify-center"
-                  defaultValue=""
+                <button
+                  onClick={() => setIsMobileMenuOpen(true)}
+                  className="bg-gradient-to-r from-rose-400 to-pink-400 text-white rounded-lg w-10 h-10 shadow-lg hover:from-rose-500 hover:to-pink-500 transition-all duration-300 focus:ring-2 focus:ring-rose-300 focus:outline-none flex items-center justify-center"
                   title="Menu de navegação"
                 >
-                  <option value="" disabled className="bg-white text-gray-900">Menu</option>
-                  <option value="inicio" className="bg-white text-gray-900">🏠 Início</option>
-                  <option value="sobre" className="bg-white text-gray-900">👩‍💼 Sobre</option>
-                  <option value="servicos" className="bg-white text-gray-900">✨ Serviços</option>
-                  <option value="portfolio" className="bg-white text-gray-900">🎨 Portfolio</option>
-                  <option value="agendamento" className="bg-white text-gray-900">📅 Agendamento</option>
-                  <option value="contato" className="bg-white text-gray-900">📞 Contato</option>
-                </select>
-                {/* Hamburger icon overlay */}
-                <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                  <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"></path>
                   </svg>
-                </div>
+                </button>
               </div>
               
               {/* WhatsApp button - apenas ícone */}
@@ -325,6 +309,79 @@ function App() {
                 <Phone className="w-5 h-5" />
               </Button>
             </div>
+            
+            {/* Modal Menu Mobile */}
+            {isMobileMenuOpen && (
+              <div className="fixed inset-0 z-50 md:hidden">
+                {/* Backdrop opaco */}
+                <div 
+                  className="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                ></div>
+                
+                {/* Modal centralizado */}
+                <div className="flex items-center justify-center min-h-screen p-4">
+                  <div className="bg-white rounded-2xl shadow-2xl w-full max-w-sm transform transition-all animate-fadeInUp">
+                    {/* Header do modal */}
+                    <div className="flex items-center justify-between p-6 border-b border-gray-100">
+                      <h3 className="text-lg font-semibold text-gray-900">Menu de Navegação</h3>
+                      <button
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        className="text-gray-400 hover:text-gray-600 transition-colors p-2 hover:bg-gray-100 rounded-full"
+                      >
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                      </button>
+                    </div>
+                    
+                    {/* Menu items */}
+                    <div className="p-4">
+                      {[
+                        { id: 'inicio', label: 'Início', icon: '🏠' },
+                        { id: 'sobre', label: 'Sobre', icon: '👩‍💼' },
+                        { id: 'servicos', label: 'Serviços', icon: '✨' },
+                        { id: 'portfolio', label: 'Portfolio', icon: '🎨' },
+                        { id: 'agendamento', label: 'Agendamento', icon: '📅' },
+                        { id: 'contato', label: 'Contato', icon: '📞' }
+                      ].map((item, index) => (
+                        <button
+                          key={item.id}
+                          onClick={() => {
+                            document.getElementById(item.id)?.scrollIntoView({ behavior: 'smooth' });
+                            setIsMobileMenuOpen(false);
+                          }}
+                          className="w-full flex items-center space-x-4 p-4 text-left hover:bg-gradient-to-r hover:from-rose-50 hover:to-pink-50 rounded-xl transition-all duration-200 group"
+                          style={{ animationDelay: `${index * 0.1}s` }}
+                        >
+                          <span className="text-2xl">{item.icon}</span>
+                          <span className="text-gray-700 group-hover:text-rose-600 font-medium transition-colors">
+                            {item.label}
+                          </span>
+                          <svg className="w-4 h-4 text-gray-400 group-hover:text-rose-500 ml-auto transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path>
+                          </svg>
+                        </button>
+                      ))}
+                    </div>
+                    
+                    {/* Footer do modal */}
+                    <div className="p-4 border-t border-gray-100">
+                      <button
+                        onClick={() => {
+                          openWhatsApp();
+                          setIsMobileMenuOpen(false);
+                        }}
+                        className="w-full bg-gradient-to-r from-green-500 to-green-600 text-white p-3 rounded-xl font-medium hover:from-green-600 hover:to-green-700 transition-all duration-200 flex items-center justify-center space-x-2"
+                      >
+                        <Phone className="w-5 h-5" />
+                        <span>Falar no WhatsApp</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </header>
