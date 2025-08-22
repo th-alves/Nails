@@ -75,7 +75,9 @@ function App() {
   const [bookedDates, setBookedDates] = useState([]);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  // Estado para controlar confirmação
+  const [showConfirmation, setShowConfirmation] = useState(false);
+  const [pendingBooking, setPendingBooking] = useState(null);
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
