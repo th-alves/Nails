@@ -208,40 +208,57 @@ function App() {
     }
   };
 
-  // Fazer agendamento
-  const handleBooking = async () => {
+  // Preparar agendamento (sem salvar ainda)
+  const prepareBooking = async () => {
     if (!selectedDate || !selectedTime || !formData.name || !formData.phone) {
       toast.error('Por favor, preencha todos os campos obrigatórios');
       return;
     }
 
+    // Criar dados do agendamento pendente
+    const bookingData = {
+      date: selectedDate.toISOString().split('T')[0],
+      time: selectedTime,
+      client_name: formData.name,
+      client_phone: formData.phone,
+      notes: formData.notes || ''
+    };
+
+    setPendingBooking(bookingData);
+    setShowConfirmation(true);
+  };
+
+  // Confirmar e enviar para WhatsApp
+  const confirmBooking = async () => {
+    if (!pendingBooking) return;
+    
     setIsLoading(true);
 
     try {
-      const bookingData = {
-        date: selectedDate.toISOString().split('T')[0],
-        time: selectedTime,
-        client_name: formData.name,
-        client_phone: formData.phone,
-        notes: formData.notes
-      };
+      // Agora sim, salvar no backend
+      await axios.post(`${API_BASE_URL}/api/bookings`, pendingBooking);
 
-      await axios.post(`${API_BASE_URL}/api/bookings`, bookingData);
-
-      toast.success('Agendamento realizado com sucesso!');
+      toast.success('✅ Agendamento confirmado! Enviando para WhatsApp...');
       
-      // Preparar mensagem do WhatsApp ANTES de resetar os dados
-      const message = `Olá! Acabei de agendar um horário para manicure:\n\nData: ${selectedDate.toLocaleDateString('pt-BR')}\nHorário: ${selectedTime}\nNome: ${formData.name}\nTelefone: ${formData.phone}`;
+      // Preparar mensagem do WhatsApp COM as observações
+      let message = `Olá! Acabei de agendar um horário para manicure:\n\n📅 Data: ${selectedDate.toLocaleDateString('pt-BR')}\n🕐 Horário: ${selectedTime}\n👤 Nome: ${pendingBooking.client_name}\n📞 Telefone: ${pendingBooking.client_phone}`;
+      
+      // Adicionar observações se existirem
+      if (pendingBooking.notes && pendingBooking.notes.trim()) {
+        message += `\n📝 Observações: ${pendingBooking.notes}`;
+      }
+      
       const whatsappUrl = `https://wa.me/5511963065438?text=${encodeURIComponent(message)}`;
       
       // Reset form data
-      setIsDialogOpen(false);
+      setShowConfirmation(false);
+      setPendingBooking(null);
       setFormData({ name: '', phone: '', notes: '' });
       setSelectedDate(null);
       setSelectedTime('');
       fetchBookedDates();
 
-      // Abrir WhatsApp com mensagem pré-definida
+      // Abrir WhatsApp
       window.open(whatsappUrl, '_blank');
 
     } catch (error) {
@@ -275,6 +292,13 @@ function App() {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  // Cancelar agendamento
+  const cancelBooking = () => {
+    setShowConfirmation(false);
+    setPendingBooking(null);
+    toast.info('Agendamento cancelado. O horário continua disponível.');
   };
 
   // Abrir WhatsApp para contato direto
