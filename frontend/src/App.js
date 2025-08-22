@@ -932,6 +932,99 @@ function App() {
         </div>
       </section>
 
+      {/* Modal de Confirmação do Agendamento */}
+      {showConfirmation && pendingBooking && (
+        <div className="fixed inset-0 z-50">
+          {/* Backdrop */}
+          <div 
+            className="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity"
+            onClick={cancelBooking}
+          ></div>
+          
+          {/* Modal */}
+          <div className="flex items-center justify-center min-h-screen p-4">
+            <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md transform transition-all animate-fadeInUp">
+              {/* Header */}
+              <div className="p-6 border-b border-gray-100">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-xl font-semibold text-gray-900">📅 Confirmar Agendamento</h3>
+                  <button
+                    onClick={cancelBooking}
+                    className="text-gray-400 hover:text-gray-600 transition-colors p-2 hover:bg-gray-100 rounded-full"
+                  >
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              
+              {/* Content */}
+              <div className="p-6">
+                <div className="bg-rose-50 border border-rose-200 rounded-xl p-4 mb-6">
+                  <h4 className="font-semibold text-rose-900 mb-3">📋 Dados do Agendamento:</h4>
+                  <div className="space-y-2 text-sm">
+                    <div className="flex justify-between">
+                      <span className="text-gray-600">📅 Data:</span>
+                      <span className="font-medium text-gray-900">{selectedDate?.toLocaleDateString('pt-BR')}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-600">🕐 Horário:</span>
+                      <span className="font-medium text-gray-900">{selectedTime}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-600">👤 Nome:</span>
+                      <span className="font-medium text-gray-900">{pendingBooking.client_name}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-600">📞 Telefone:</span>
+                      <span className="font-medium text-gray-900">{pendingBooking.client_phone}</span>
+                    </div>
+                    {pendingBooking.notes && pendingBooking.notes.trim() && (
+                      <div className="pt-2 border-t border-rose-200">
+                        <span className="text-gray-600">📝 Observações:</span>
+                        <p className="font-medium text-gray-900 mt-1">{pendingBooking.notes}</p>
+                      </div>
+                    )}
+                  </div>
+                </div>
+                
+                <div className="bg-green-50 border border-green-200 rounded-xl p-4 mb-6">
+                  <p className="text-green-800 text-sm">
+                    <strong>✅ Quase lá!</strong> Ao confirmar, seu agendamento será salvo e você será redirecionada para o WhatsApp para finalizar.
+                  </p>
+                </div>
+              </div>
+              
+              {/* Footer */}
+              <div className="p-6 border-t border-gray-100 flex gap-3">
+                <Button
+                  onClick={cancelBooking}
+                  variant="outline"
+                  className="flex-1 border-gray-300 text-gray-700 hover:bg-gray-50"
+                  disabled={isLoading}
+                >
+                  ❌ Cancelar
+                </Button>
+                <Button
+                  onClick={confirmBooking}
+                  className="flex-1 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white"
+                  disabled={isLoading}
+                >
+                  {isLoading ? (
+                    <span className="loading-dots">Confirmando</span>
+                  ) : (
+                    <>
+                      💬 Confirmar & WhatsApp
+                    </>
+                  )}
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Contato */}
       <section id="contato" className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto text-center">
