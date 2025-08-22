@@ -283,13 +283,236 @@ class KamileNailsAPITester:
         """Test getting dashboard statistics"""
         return self.run_test("Dashboard Stats", "GET", "api/dashboard/stats", 200)
 
+    def test_bug_notes_whatsapp_integration(self):
+        """BUG 1 - Test if notes are properly saved and returned in API responses"""
+        print("\n🐛 TESTING BUG 1 - Observações no WhatsApp")
+        
+        # Use specific date from review request
+        test_date = "2025-08-25"
+        detailed_notes = "Gostaria de nail art floral nas cores rosa e roxo"
+        
+        booking_data = {
+            "date": test_date,
+            "time": "14:00",
+            "client_name": "Fernanda Costa",
+            "client_phone": "(11) 97654-3210",
+            "notes": detailed_notes
+        }
+        
+        print(f"   Creating booking with detailed notes: '{detailed_notes}'")
+        success, response = self.run_test(
+            "Create Booking with Detailed Notes",
+            "POST",
+            "api/bookings",
+            200,
+            data=booking_data
+        )
+        
+        if success and 'id' in response:
+            booking_id = response['id']
+            
+            # Verify notes are in the creation response
+            if 'notes' in response and response['notes'] == detailed_notes:
+                print(f"✅ Notes correctly returned in creation response")
+                self.tests_passed += 1
+            else:
+                print(f"❌ Notes missing or incorrect in creation response")
+                print(f"   Expected: '{detailed_notes}'")
+                print(f"   Got: '{response.get('notes', 'MISSING')}'")
+            self.tests_run += 1
+            
+            # Get the specific booking to verify notes persistence
+            print(f"   Retrieving booking {booking_id} to verify notes persistence...")
+            success2, response2 = self.run_test(
+                "Get Booking to Verify Notes",
+                "GET",
+                f"api/bookings/{booking_id}",
+                200
+            )
+            
+            if success2 and 'notes' in response2 and response2['notes'] == detailed_notes:
+                print(f"✅ Notes correctly persisted and retrieved")
+                self.tests_passed += 1
+            else:
+                print(f"❌ Notes not properly persisted")
+                print(f"   Expected: '{detailed_notes}'")
+                print(f"   Got: '{response2.get('notes', 'MISSING')}'")
+            self.tests_run += 1
+            
+            return booking_id
+        else:
+            print(f"❌ Failed to create booking with notes")
+            self.tests_run += 2  # Count both tests as failed
+            return None
+
+    def test_bug_booking_confirmation_flow(self):
+        """BUG 2 - Test booking confirmation flow and slot availability"""
+        print("\n🐛 TESTING BUG 2 - Confirmação de agendamento")
+        
+        test_date = "2025-08-25"
+        test_time = "09:00"
+        
+        # Step 1: Check initial available slots
+        print(f"   Step 1: Checking available slots for {test_date}")
+        success1, initial_slots = self.run_test(
+            "Check Initial Available Slots",
+            "GET",
+            "api/available-slots",
+            200,
+            params={"date": test_date}
+        )
+        
+        if success1 and isinstance(initial_slots, list):
+            initial_count = len(initial_slots)
+            print(f"   Initial available slots: {initial_count} slots")
+            if test_time in initial_slots:
+                print(f"✅ Target time {test_time} is initially available")
+                self.tests_passed += 1
+            else:
+                print(f"❌ Target time {test_time} is not available initially")
+            self.tests_run += 1
+        else:
+            print(f"❌ Failed to get initial slots")
+            self.tests_run += 1
+            return None
+        
+        # Step 2: Create booking with detailed notes
+        booking_data = {
+            "date": test_date,
+            "time": test_time,
+            "client_name": "Camila Rodrigues",
+            "client_phone": "(11) 96543-2109",
+            "notes": "Primeira vez no salão, gostaria de unhas decoradas com flores pequenas"
+        }
+        
+        print(f"   Step 2: Creating booking for {test_time}")
+        success2, booking_response = self.run_test(
+            "Create Booking for Slot Test",
+            "POST",
+            "api/bookings",
+            200,
+            data=booking_data
+        )
+        
+        booking_id = None
+        if success2 and 'id' in booking_response:
+            booking_id = booking_response['id']
+            print(f"   Booking created with ID: {booking_id}")
+            
+            # Verify booking status is 'confirmed'
+            if booking_response.get('status') == 'confirmed':
+                print(f"✅ Booking status is 'confirmed' immediately after creation")
+                self.tests_passed += 1
+            else:
+                print(f"❌ Booking status is not 'confirmed': {booking_response.get('status')}")
+            self.tests_run += 1
+        else:
+            print(f"❌ Failed to create booking")
+            self.tests_run += 1
+            return None
+        
+        # Step 3: Verify slot is no longer available
+        print(f"   Step 3: Checking if {test_time} slot is now occupied")
+        success3, updated_slots = self.run_test(
+            "Check Slots After Booking",
+            "GET",
+            "api/available-slots",
+            200,
+            params={"date": test_date}
+        )
+        
+        if success3 and isinstance(updated_slots, list):
+            if test_time not in updated_slots:
+                print(f"✅ Time slot {test_time} is correctly removed from available slots")
+                self.tests_passed += 1
+            else:
+                print(f"❌ Time slot {test_time} is still available after booking")
+            self.tests_run += 1
+            
+            # Verify other slots are still available
+            remaining_count = len(updated_slots)
+            if remaining_count == initial_count - 1:
+                print(f"✅ Exactly one slot removed ({initial_count} -> {remaining_count})")
+                self.tests_passed += 1
+            else:
+                print(f"❌ Unexpected slot count change ({initial_count} -> {remaining_count})")
+            self.tests_run += 1
+        else:
+            print(f"❌ Failed to get updated slots")
+            self.tests_run += 2
+        
+        # Step 4: Test cancellation and slot availability restoration
+        if booking_id:
+            print(f"   Step 4: Testing cancellation and slot restoration")
+            success4, cancel_response = self.run_test(
+                "Cancel Booking",
+                "PUT",
+                f"api/bookings/{booking_id}/cancel",
+                200
+            )
+            
+            if success4:
+                # Verify booking status changed to cancelled
+                if cancel_response.get('status') == 'cancelled':
+                    print(f"✅ Booking status changed to 'cancelled'")
+                    self.tests_passed += 1
+                else:
+                    print(f"❌ Booking status not 'cancelled': {cancel_response.get('status')}")
+                self.tests_run += 1
+                
+                # Check if slot becomes available again
+                print(f"   Step 5: Checking if {test_time} slot is available after cancellation")
+                success5, final_slots = self.run_test(
+                    "Check Slots After Cancellation",
+                    "GET",
+                    "api/available-slots",
+                    200,
+                    params={"date": test_date}
+                )
+                
+                if success5 and isinstance(final_slots, list):
+                    if test_time in final_slots:
+                        print(f"✅ Time slot {test_time} is available again after cancellation")
+                        self.tests_passed += 1
+                    else:
+                        print(f"❌ Time slot {test_time} is still not available after cancellation")
+                    self.tests_run += 1
+                    
+                    # Verify we're back to original slot count
+                    final_count = len(final_slots)
+                    if final_count == initial_count:
+                        print(f"✅ Slot count restored to original ({final_count})")
+                        self.tests_passed += 1
+                    else:
+                        print(f"❌ Slot count not restored ({initial_count} -> {final_count})")
+                    self.tests_run += 1
+                else:
+                    print(f"❌ Failed to get final slots")
+                    self.tests_run += 2
+            else:
+                print(f"❌ Failed to cancel booking")
+                self.tests_run += 3
+        
+        return booking_id
+
 def main():
-    print("🚀 Starting Kamile Nails API Tests")
-    print("=" * 50)
+    print("🚀 Starting Kamile Nails API Tests - FOCUSED ON BUG FIXES")
+    print("=" * 60)
     
     tester = KamileNailsAPITester()
     
-    # Run all tests
+    # Run focused bug tests first
+    print("\n🎯 FOCUSED BUG TESTING")
+    print("=" * 40)
+    
+    # Test the specific bugs mentioned in review request
+    booking_id_1 = tester.test_bug_notes_whatsapp_integration()
+    booking_id_2 = tester.test_bug_booking_confirmation_flow()
+    
+    print("\n🔄 COMPREHENSIVE API TESTING")
+    print("=" * 40)
+    
+    # Run comprehensive tests
     test_methods = [
         tester.test_health_check,
         tester.test_available_slots_valid_weekday,
