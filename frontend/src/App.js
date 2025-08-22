@@ -912,7 +912,7 @@ function App() {
                   )}
 
                   <Button
-                    onClick={handleBooking}
+                    onClick={prepareBooking}
                     className="w-full bg-gradient-to-r from-rose-400 to-pink-400 hover:from-rose-500 hover:to-pink-500 hover-lift"
                     disabled={!selectedDate || !selectedTime || !formData.name || !formData.phone || isLoading}
                   >
