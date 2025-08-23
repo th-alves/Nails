@@ -9,7 +9,7 @@ import json
 from datetime import datetime, timedelta
 
 def test_kamile_nails_api():
-    base_url = "https://repo-inspector-29.preview.emergentagent.com"
+    base_url = "https://schedule-confirm-bug.preview.emergentagent.com"
     
     print("🚀 Testing Kamile Nails API with realistic data")
     print("=" * 60)
