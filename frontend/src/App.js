@@ -328,7 +328,7 @@ function App() {
             <div className="flex items-center space-x-3">
               {/* Menu mobile dropdown moderno */}
               <div className="md:hidden">
-                <DropdownMenu>
+                <DropdownMenu open={isDropdownOpen} onOpenChange={setIsDropdownOpen}>
                   <DropdownMenuTrigger asChild>
                     <Button
                       variant="ghost"
@@ -345,7 +345,7 @@ function App() {
                     className="w-56 bg-white/95 backdrop-blur-md border-rose-100 shadow-xl animate-slideInDown"
                   >
                     <DropdownMenuItem 
-                      onClick={() => document.getElementById('inicio')?.scrollIntoView({ behavior: 'smooth' })}
+                      onClick={() => handleNavigateToSection('inicio')}
                       className="cursor-pointer hover:bg-rose-50 focus:bg-rose-50 text-gray-700 hover:text-rose-600 transition-colors py-3"
                     >
                       <Home className="w-4 h-4 mr-3 text-rose-500" />
@@ -353,7 +353,7 @@ function App() {
                     </DropdownMenuItem>
                     
                     <DropdownMenuItem 
-                      onClick={() => document.getElementById('sobre')?.scrollIntoView({ behavior: 'smooth' })}
+                      onClick={() => handleNavigateToSection('sobre')}
                       className="cursor-pointer hover:bg-rose-50 focus:bg-rose-50 text-gray-700 hover:text-rose-600 transition-colors py-3"
                     >
                       <User className="w-4 h-4 mr-3 text-rose-500" />
@@ -361,7 +361,7 @@ function App() {
                     </DropdownMenuItem>
                     
                     <DropdownMenuItem 
-                      onClick={() => document.getElementById('servicos')?.scrollIntoView({ behavior: 'smooth' })}
+                      onClick={() => handleNavigateToSection('servicos')}
                       className="cursor-pointer hover:bg-rose-50 focus:bg-rose-50 text-gray-700 hover:text-rose-600 transition-colors py-3"
                     >
                       <Sparkles className="w-4 h-4 mr-3 text-rose-500" />
@@ -369,7 +369,7 @@ function App() {
                     </DropdownMenuItem>
                     
                     <DropdownMenuItem 
-                      onClick={() => document.getElementById('portfolio')?.scrollIntoView({ behavior: 'smooth' })}
+                      onClick={() => handleNavigateToSection('portfolio')}
                       className="cursor-pointer hover:bg-rose-50 focus:bg-rose-50 text-gray-700 hover:text-rose-600 transition-colors py-3"
                     >
                       <Camera className="w-4 h-4 mr-3 text-rose-500" />
@@ -379,7 +379,7 @@ function App() {
                     <DropdownMenuSeparator className="bg-rose-100 my-2" />
                     
                     <DropdownMenuItem 
-                      onClick={() => document.getElementById('agendamento')?.scrollIntoView({ behavior: 'smooth' })}
+                      onClick={() => handleNavigateToSection('agendamento')}
                       className="cursor-pointer hover:bg-rose-50 focus:bg-rose-50 text-gray-700 hover:text-rose-600 transition-colors py-3"
                     >
                       <Calendar className="w-4 h-4 mr-3 text-rose-500" />
@@ -387,7 +387,7 @@ function App() {
                     </DropdownMenuItem>
                     
                     <DropdownMenuItem 
-                      onClick={() => document.getElementById('contato')?.scrollIntoView({ behavior: 'smooth' })}
+                      onClick={() => handleNavigateToSection('contato')}
                       className="cursor-pointer hover:bg-rose-50 focus:bg-rose-50 text-gray-700 hover:text-rose-600 transition-colors py-3"
                     >
                       <PhoneCall className="w-4 h-4 mr-3 text-rose-500" />
