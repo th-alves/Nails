@@ -19,21 +19,38 @@ load_dotenv()
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-app = FastAPI(title="Kamile Nails API", version="1.0.0")
-
-# CORS configuration
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
 # MongoDB connection
 MONGO_URL = os.getenv("MONGO_URL", "mongodb://localhost:27017")
 client = AsyncIOMotorClient(MONGO_URL)
 db = client.kamile_nails
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    """Application lifespan manager"""
+    try:
+        # Startup: Create indexes for better performance
+        await db.bookings.create_index([("date", 1), ("time", 1)])
+        await db.bookings.create_index([("client_phone", 1)])
+        await db.bookings.create_index([("status", 1)])
+        await db.bookings.create_index([("created_at", -1)])
+        
+        logger.info("Database indexes created successfully")
+        logger.info("Kamile Nails API started successfully")
+        
+        yield
+        
+    except Exception as e:
+        logger.error(f"Error during startup: {str(e)}")
+    finally:
+        # Shutdown: Clean up resources
+        try:
+            client.close()
+            logger.info("Database connection closed")
+            logger.info("Kamile Nails API shutdown successfully")
+        except Exception as e:
+            logger.error(f"Error during shutdown: {str(e)}")
+
+app = FastAPI(title="Kamile Nails API", version="1.0.0", lifespan=lifespan)
 
 # Pydantic models
 class BookingCreate(BaseModel):
