@@ -344,35 +344,6 @@ async def get_dashboard_stats():
         logger.error(f"Error getting dashboard stats: {str(e)}")
         raise HTTPException(status_code=500, detail="Internal server error")
 
-# Startup event
-@app.on_event("startup")
-async def startup_event():
-    """Initialize database indexes on startup"""
-    try:
-        # Create indexes for better performance
-        await db.bookings.create_index([("date", 1), ("time", 1)])
-        await db.bookings.create_index([("client_phone", 1)])
-        await db.bookings.create_index([("status", 1)])
-        await db.bookings.create_index([("created_at", -1)])
-        
-        logger.info("Database indexes created successfully")
-        logger.info("Kamile Nails API started successfully")
-        
-    except Exception as e:
-        logger.error(f"Error during startup: {str(e)}")
-
-# Shutdown event
-@app.on_event("shutdown")
-async def shutdown_event():
-    """Clean up resources on shutdown"""
-    try:
-        client.close()
-        logger.info("Database connection closed")
-        logger.info("Kamile Nails API shutdown successfully")
-        
-    except Exception as e:
-        logger.error(f"Error during shutdown: {str(e)}")
-
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8001)
