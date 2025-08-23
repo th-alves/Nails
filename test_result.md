@@ -288,15 +288,11 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Calendar Component and Date Selection"
     - "Time Slot Selection and Availability"
-    - "Booking Form and Validation"
-    - "Booking Confirmation and WhatsApp Integration"
-    - "Error Handling and User Feedback"
-    - "Responsive Design and Mobile Compatibility"
-  stuck_tasks: []
-  test_all: true
-  test_priority: "high_first"
+  stuck_tasks:
+    - "Time Slot Selection and Availability"
+  test_all: false
+  test_priority: "stuck_first"
 
   - task: "Pydantic v2 Modernization Testing"
     implemented: true
