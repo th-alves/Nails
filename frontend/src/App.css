@@ -112,7 +112,7 @@
 
 .hover-lift:hover {
   transform: translateY(-5px);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
 }
 
 .hover-scale {
@@ -121,6 +121,15 @@
 
 .hover-scale:hover {
   transform: scale(1.05);
+}
+
+.card-hover {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-hover:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
 }
 
 /* Gradientes personalizados */
