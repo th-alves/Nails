@@ -210,8 +210,9 @@ metadata:
 
 test_plan:
   current_focus:
-    - "All backend API endpoints tested and verified"
-    - "Occupied slots functionality thoroughly tested"
+    - "Pydantic v2 Modernization Testing"
+    - "FastAPI Lifespan Modernization Testing"
+    - "All backend API endpoints tested and verified after modernization"
   stuck_tasks: []
   test_all: true
   test_priority: "high_first"
