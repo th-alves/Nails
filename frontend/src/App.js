@@ -308,33 +308,75 @@ function App() {
             </nav>
             
             <div className="flex items-center space-x-3">
-              {/* Menu mobile - apenas ícone */}
-              <div className="md:hidden relative">
-                <select 
-                  onChange={(e) => {
-                    if (e.target.value) {
-                      document.getElementById(e.target.value)?.scrollIntoView({ behavior: 'smooth' });
-                      e.target.value = ''; // Reset selection
-                    }
-                  }}
-                  className="appearance-none bg-gradient-to-r from-rose-400 to-pink-400 text-white rounded-lg w-10 h-10 shadow-lg hover:from-rose-500 hover:to-pink-500 transition-all duration-300 cursor-pointer focus:ring-2 focus:ring-rose-300 focus:outline-none flex items-center justify-center"
-                  defaultValue=""
-                  title=""
-                >
-                  <option value="" disabled className="bg-white text-gray-900"></option>
-                  <option value="inicio" className="bg-white text-gray-900">🏠 Início</option>
-                  <option value="sobre" className="bg-white text-gray-900">👩‍💼 Sobre</option>
-                  <option value="servicos" className="bg-white text-gray-900">✨ Serviços</option>
-                  <option value="portfolio" className="bg-white text-gray-900">🎨 Portfolio</option>
-                  <option value="agendamento" className="bg-white text-gray-900">📅 Agendamento</option>
-                  <option value="contato" className="bg-white text-gray-900">📞 Contato</option>
-                </select>
-                {/* Hamburger icon overlay */}
-                <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                  <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                  </svg>
-                </div>
+              {/* Menu mobile dropdown moderno */}
+              <div className="md:hidden">
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="bg-gradient-to-r from-rose-400 to-pink-400 hover:from-rose-500 hover:to-pink-500 text-white w-10 h-10 p-0 rounded-lg shadow-lg transition-all duration-300 hover-scale focus:ring-2 focus:ring-rose-300 focus:outline-none"
+                    >
+                      <Menu className="w-5 h-5" />
+                      <span className="sr-only">Abrir menu</span>
+                    </Button>
+                  </DropdownMenuTrigger>
+                  
+                  <DropdownMenuContent 
+                    align="end" 
+                    className="w-56 bg-white/95 backdrop-blur-md border-rose-100 shadow-xl animate-slideInDown"
+                  >
+                    <DropdownMenuItem 
+                      onClick={() => document.getElementById('inicio')?.scrollIntoView({ behavior: 'smooth' })}
+                      className="cursor-pointer hover:bg-rose-50 focus:bg-rose-50 text-gray-700 hover:text-rose-600 transition-colors py-3"
+                    >
+                      <Home className="w-4 h-4 mr-3 text-rose-500" />
+                      <span className="font-medium">Início</span>
+                    </DropdownMenuItem>
+                    
+                    <DropdownMenuItem 
+                      onClick={() => document.getElementById('sobre')?.scrollIntoView({ behavior: 'smooth' })}
+                      className="cursor-pointer hover:bg-rose-50 focus:bg-rose-50 text-gray-700 hover:text-rose-600 transition-colors py-3"
+                    >
+                      <User className="w-4 h-4 mr-3 text-rose-500" />
+                      <span className="font-medium">Sobre</span>
+                    </DropdownMenuItem>
+                    
+                    <DropdownMenuItem 
+                      onClick={() => document.getElementById('servicos')?.scrollIntoView({ behavior: 'smooth' })}
+                      className="cursor-pointer hover:bg-rose-50 focus:bg-rose-50 text-gray-700 hover:text-rose-600 transition-colors py-3"
+                    >
+                      <Sparkles className="w-4 h-4 mr-3 text-rose-500" />
+                      <span className="font-medium">Serviços</span>
+                    </DropdownMenuItem>
+                    
+                    <DropdownMenuItem 
+                      onClick={() => document.getElementById('portfolio')?.scrollIntoView({ behavior: 'smooth' })}
+                      className="cursor-pointer hover:bg-rose-50 focus:bg-rose-50 text-gray-700 hover:text-rose-600 transition-colors py-3"
+                    >
+                      <Camera className="w-4 h-4 mr-3 text-rose-500" />
+                      <span className="font-medium">Portfolio</span>
+                    </DropdownMenuItem>
+                    
+                    <DropdownMenuSeparator className="bg-rose-100 my-2" />
+                    
+                    <DropdownMenuItem 
+                      onClick={() => document.getElementById('agendamento')?.scrollIntoView({ behavior: 'smooth' })}
+                      className="cursor-pointer hover:bg-rose-50 focus:bg-rose-50 text-gray-700 hover:text-rose-600 transition-colors py-3"
+                    >
+                      <Calendar className="w-4 h-4 mr-3 text-rose-500" />
+                      <span className="font-medium">Agendamento</span>
+                    </DropdownMenuItem>
+                    
+                    <DropdownMenuItem 
+                      onClick={() => document.getElementById('contato')?.scrollIntoView({ behavior: 'smooth' })}
+                      className="cursor-pointer hover:bg-rose-50 focus:bg-rose-50 text-gray-700 hover:text-rose-600 transition-colors py-3"
+                    >
+                      <PhoneCall className="w-4 h-4 mr-3 text-rose-500" />
+                      <span className="font-medium">Contato</span>
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
               </div>
               
               {/* WhatsApp button - apenas ícone */}
