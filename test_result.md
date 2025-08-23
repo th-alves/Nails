@@ -270,9 +270,12 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Pydantic v2 Modernization Testing"
-    - "FastAPI Lifespan Modernization Testing"
-    - "All backend API endpoints tested and verified after modernization"
+    - "Calendar Component and Date Selection"
+    - "Time Slot Selection and Availability"
+    - "Booking Form and Validation"
+    - "Booking Confirmation and WhatsApp Integration"
+    - "Error Handling and User Feedback"
+    - "Responsive Design and Mobile Compatibility"
   stuck_tasks: []
   test_all: true
   test_priority: "high_first"
