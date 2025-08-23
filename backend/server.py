@@ -1,7 +1,7 @@
 from fastapi import FastAPI, HTTPException, BackgroundTasks
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
-from pydantic import BaseModel, validator
+from pydantic import BaseModel, field_validator
 from typing import Optional, List
 from datetime import datetime, date, time, timedelta
 from motor.motor_asyncio import AsyncIOMotorClient
@@ -42,7 +42,8 @@ class BookingCreate(BaseModel):
     client_phone: str
     notes: Optional[str] = ""
     
-    @validator('date')
+    @field_validator('date')
+    @classmethod
     def validate_date(cls, v):
         try:
             datetime.strptime(v, '%Y-%m-%d')
@@ -50,7 +51,8 @@ class BookingCreate(BaseModel):
         except ValueError:
             raise ValueError('Date must be in YYYY-MM-DD format')
     
-    @validator('time')
+    @field_validator('time')
+    @classmethod
     def validate_time(cls, v):
         try:
             datetime.strptime(v, '%H:%M')
@@ -58,13 +60,15 @@ class BookingCreate(BaseModel):
         except ValueError:
             raise ValueError('Time must be in HH:MM format')
     
-    @validator('client_name')
+    @field_validator('client_name')
+    @classmethod
     def validate_name(cls, v):
         if len(v.strip()) < 2:
             raise ValueError('Name must have at least 2 characters')
         return v.strip()
     
-    @validator('client_phone')
+    @field_validator('client_phone')
+    @classmethod
     def validate_phone(cls, v):
         # Remove common phone formatting
         phone = v.replace('(', '').replace(')', '').replace('-', '').replace(' ', '')
