@@ -276,6 +276,23 @@ function App() {
     }
   };
 
+  // Navegação com fechamento do dropdown
+  const handleNavigateToSection = (sectionId) => {
+    // Fechar o dropdown primeiro
+    setIsDropdownOpen(false);
+    
+    // Aguardar um pouco para o dropdown fechar e depois fazer scroll
+    setTimeout(() => {
+      const element = document.getElementById(sectionId);
+      if (element) {
+        element.scrollIntoView({ 
+          behavior: 'smooth',
+          block: 'start'
+        });
+      }
+    }, 100);
+  };
+
   // Abrir WhatsApp para contato direto
   const openWhatsApp = () => {
     const message = 'Olá! Gostaria de saber mais sobre os seus serviços! 💅';
