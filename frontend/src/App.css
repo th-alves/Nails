@@ -132,7 +132,7 @@
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
 }
 
-/* Gradientes personalizados */
+/* Gradientes e efeitos personalizados */
 .gradient-text {
   background: linear-gradient(135deg, #ec4899, #f97316);
   -webkit-background-clip: text;
@@ -140,8 +140,23 @@
   background-clip: text;
 }
 
+.text-gradient {
+  background: linear-gradient(135deg, #f43f5e, #ec4899, #8b5cf6);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
 .gradient-bg {
   background: linear-gradient(135deg, #fdf2f8 0%, #fce7f3 50%, #ede9fe 100%);
+}
+
+.bg-gradient-radial {
+  background: radial-gradient(ellipse at center, var(--tw-gradient-stops));
+}
+
+.bg-gradient-conic {
+  background: conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops));
 }
 
 /* Efeitos de glass morphism */
