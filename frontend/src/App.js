@@ -222,7 +222,13 @@ function App() {
       toast.success('Agendamento realizado com sucesso!');
       
       // Preparar mensagem do WhatsApp ANTES de resetar os dados
-      const message = `Olá! Acabei de agendar um horário para manicure:\n\nData: ${selectedDate.toLocaleDateString('pt-BR')}\nHorário: ${selectedTime}\nNome: ${formData.name}\nTelefone: ${formData.phone}`;
+      let message = `Olá! Acabei de agendar um horário para manicure:\n\nData: ${selectedDate.toLocaleDateString('pt-BR')}\nHorário: ${selectedTime}\nNome: ${formData.name}\nTelefone: ${formData.phone}`;
+      
+      // Adicionar observações se existirem
+      if (formData.notes && formData.notes.trim()) {
+        message += `\nObservações: ${formData.notes}`;
+      }
+      
       const whatsappUrl = `https://wa.me/5511963065438?text=${encodeURIComponent(message)}`;
       
       // Reset form data
