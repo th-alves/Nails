@@ -206,6 +206,7 @@ function App() {
     }
 
     setIsLoading(true);
+    setIsConfirmModalOpen(false); // Fechar o modal de confirmação
 
     try {
       const bookingData = {
