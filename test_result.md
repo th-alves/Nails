@@ -207,15 +207,18 @@ frontend:
 
   - task: "Time Slot Selection and Availability"
     implemented: true
-    working: "NA"
+    working: false
     file: "/app/frontend/src/App.js"
-    stuck_count: 0
+    stuck_count: 1
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
         - working: "NA"
           agent: "testing"
           comment: "Time slot generation (8:00-17:00) and availability checking implemented. Needs testing for proper API integration and slot display after date selection."
+        - working: false
+          agent: "testing"
+          comment: "❌ TIME SLOTS NOT LOADING: Calendar date selection works (42 clickable days detected), but time slots do not appear after clicking dates. API integration issue suspected - the frontend calls /api/available-slots but no time slots are returned. Backend API was tested and works, so this appears to be a frontend-backend integration issue. The generateTimeSlots() function exists but API response handling may have issues."
 
   - task: "Booking Form and Validation"
     implemented: true
