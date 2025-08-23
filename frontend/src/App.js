@@ -842,6 +842,88 @@ function App() {
               </div>
             </div>
           </div>
+
+          {/* Modal de Confirmação de Agendamento */}
+          <Dialog open={isConfirmModalOpen} onOpenChange={setIsConfirmModalOpen}>
+            <DialogContent className="sm:max-w-md">
+              <DialogHeader>
+                <DialogTitle className="flex items-center space-x-2">
+                  <Calendar className="w-5 h-5 text-rose-500" />
+                  <span>Confirmar Agendamento</span>
+                </DialogTitle>
+                <DialogDescription>
+                  Por favor, confirme os dados do seu agendamento:
+                </DialogDescription>
+              </DialogHeader>
+              
+              <div className="space-y-4 py-4">
+                <div className="bg-rose-50 border border-rose-200 rounded-lg p-4">
+                  <h4 className="font-semibold text-rose-900 mb-3">Detalhes do Agendamento:</h4>
+                  
+                  <div className="space-y-2 text-sm">
+                    <div className="flex justify-between">
+                      <span className="text-gray-600">Data:</span>
+                      <span className="font-medium text-gray-900">
+                        {selectedDate?.toLocaleDateString('pt-BR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
+                      </span>
+                    </div>
+                    
+                    <div className="flex justify-between">
+                      <span className="text-gray-600">Horário:</span>
+                      <span className="font-medium text-gray-900">{selectedTime}</span>
+                    </div>
+                    
+                    <div className="flex justify-between">
+                      <span className="text-gray-600">Nome:</span>
+                      <span className="font-medium text-gray-900">{formData.name}</span>
+                    </div>
+                    
+                    <div className="flex justify-between">
+                      <span className="text-gray-600">Telefone:</span>
+                      <span className="font-medium text-gray-900">{formData.phone}</span>
+                    </div>
+                    
+                    {formData.notes && (
+                      <div className="mt-3 pt-3 border-t border-rose-200">
+                        <span className="text-gray-600 block mb-1">Observações:</span>
+                        <span className="text-gray-900 text-sm italic">"{formData.notes}"</span>
+                      </div>
+                    )}
+                  </div>
+                </div>
+                
+                <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
+                  <p className="text-blue-700 text-sm">
+                    <strong>✓ Atenção:</strong> Após confirmar, você será direcionada para o WhatsApp para finalizar o agendamento.
+                  </p>
+                </div>
+              </div>
+              
+              <div className="flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2 space-y-2 space-y-reverse sm:space-y-0">
+                <Button 
+                  variant="outline" 
+                  onClick={() => setIsConfirmModalOpen(false)}
+                  className="border-gray-300 text-gray-700 hover:bg-gray-50"
+                >
+                  Cancelar
+                </Button>
+                <Button 
+                  onClick={handleBooking}
+                  disabled={isLoading}
+                  className="bg-gradient-to-r from-rose-400 to-pink-400 hover:from-rose-500 hover:to-pink-500"
+                >
+                  {isLoading ? (
+                    <span className="loading-dots">Confirmando</span>
+                  ) : (
+                    <>
+                      <CheckCircle className="w-4 h-4 mr-2" />
+                      Confirmar Agendamento
+                    </>
+                  )}
+                </Button>
+              </div>
+            </DialogContent>
+          </Dialog>
         </div>
       </section>
 
