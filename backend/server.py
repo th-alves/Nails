@@ -52,6 +52,15 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(title="Kamile Nails API", version="1.0.0", lifespan=lifespan)
 
+# CORS configuration
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 # Pydantic models
 class BookingCreate(BaseModel):
     date: str
