@@ -189,6 +189,15 @@ function App() {
     }
   };
 
+  // Abrir modal de confirmação
+  const handleOpenConfirmModal = () => {
+    if (!selectedDate || !selectedTime || !formData.name || !formData.phone) {
+      toast.error('Por favor, preencha todos os campos obrigatórios');
+      return;
+    }
+    setIsConfirmModalOpen(true);
+  };
+
   // Fazer agendamento
   const handleBooking = async () => {
     if (!selectedDate || !selectedTime || !formData.name || !formData.phone) {
