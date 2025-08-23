@@ -311,18 +311,18 @@ function App() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-4">
             <div className="flex items-center space-x-2 animate-slideInLeft">
-              <Sparkles className="h-8 w-8 text-rose-500 animate-float" />
-              <span className="text-2xl font-bold gradient-text">
+              <Sparkles className="h-8 w-8 text-rose-500" />
+              <span className="text-2xl font-bold gradient-text cursor-default">
                 Kamile Nails
               </span>
             </div>
             <nav className="hidden md:flex space-x-8 animate-fadeInUp">
-              <a href="#inicio" className="text-gray-700 hover:text-rose-500 transition-colors hover-lift">Início</a>
-              <a href="#sobre" className="text-gray-700 hover:text-rose-500 transition-colors hover-lift">Sobre</a>
-              <a href="#servicos" className="text-gray-700 hover:text-rose-500 transition-colors hover-lift">Serviços</a>
-              <a href="#portfolio" className="text-gray-700 hover:text-rose-500 transition-colors hover-lift">Portfolio</a>
-              <a href="#agendamento" className="text-gray-700 hover:text-rose-500 transition-colors hover-lift">Agendamento</a>
-              <a href="#contato" className="text-gray-700 hover:text-rose-500 transition-colors hover-lift">Contato</a>
+              <a href="#inicio" className="text-gray-700 hover:text-rose-500 transition-colors">Início</a>
+              <a href="#sobre" className="text-gray-700 hover:text-rose-500 transition-colors">Sobre</a>
+              <a href="#servicos" className="text-gray-700 hover:text-rose-500 transition-colors">Serviços</a>
+              <a href="#portfolio" className="text-gray-700 hover:text-rose-500 transition-colors">Portfolio</a>
+              <a href="#agendamento" className="text-gray-700 hover:text-rose-500 transition-colors">Agendamento</a>
+              <a href="#contato" className="text-gray-700 hover:text-rose-500 transition-colors">Contato</a>
             </nav>
             
             <div className="flex items-center space-x-3">
@@ -429,7 +429,7 @@ function App() {
             </Badge>
             <h1 className="text-5xl md:text-7xl font-bold text-gray-900 mb-6 animate-fadeInUp">
               Suas unhas
-              <span className="block gradient-text animate-pulse-gentle">
+              <span className="block gradient-text">
                 perfeitas
               </span>
             </h1>
@@ -460,7 +460,7 @@ function App() {
           </div>
 
           {/* Estatísticas */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto cursor-default">
             <div className="text-center animate-slideInLeft">
               <div className="text-3xl font-bold text-rose-500 mb-2">2+ Anos</div>
               <div className="text-gray-600">de Experiência</div>
@@ -483,7 +483,7 @@ function App() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="animate-slideInLeft">
               <div className="relative">
-                <img src={kamile} alt="Kamile mostrando as unhas" className="w-full h-96 object-cover rounded-2xl shadow-2xl hover-scale" />
+                <img src={kamile} alt="Kamile mostrando as unhas" className="w-full h-[30rem] object-cover rounded-2xl shadow-2xl hover-scale" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent rounded-2xl"></div>
               </div>
             </div>
@@ -632,7 +632,7 @@ function App() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <Card className="hover-lift transition-all duration-300 border-rose-100 animate-fadeInUp">
               <CardHeader>
-                <div className="w-12 h-12 bg-rose-100 rounded-lg flex items-center justify-center mb-4 animate-float">
+                <div className="w-12 h-12 bg-rose-100 rounded-lg flex items-center justify-center mb-4">
                   <Sparkles className="w-6 h-6 text-rose-500" />
                 </div>
                 <CardTitle className="text-rose-900">Manicure Clássica</CardTitle>
@@ -652,7 +652,7 @@ function App() {
 
             <Card className="hover-lift transition-all duration-300 border-pink-100 animate-fadeInUp" style={{ animationDelay: '0.1s' }}>
               <CardHeader>
-                <div className="w-12 h-12 bg-pink-100 rounded-lg flex items-center justify-center mb-4 animate-float" style={{ animationDelay: '0.5s' }}>
+                <div className="w-12 h-12 bg-pink-100 rounded-lg flex items-center justify-center mb-4" style={{ animationDelay: '0.5s' }}>
                   <Heart className="w-6 h-6 text-pink-500" />
                 </div>
                 <CardTitle className="text-pink-900">Manutenção</CardTitle>
@@ -672,7 +672,7 @@ function App() {
 
             <Card className="hover-lift transition-all duration-300 border-blue-100 animate-fadeInUp" style={{ animationDelay: '0.2s' }}>
               <CardHeader>
-                <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4 animate-float" style={{ animationDelay: '1s' }}>
+                <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4" style={{ animationDelay: '1s' }}>
                   <Star className="w-6 h-6 text-blue-400" />
                 </div>
                 <CardTitle className="text-blue-900">Nail Art</CardTitle>
