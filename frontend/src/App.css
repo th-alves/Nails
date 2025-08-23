@@ -222,53 +222,7 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Button hover effects */
-.btn-gradient-hover {
-  position: relative;
-  overflow: hidden;
-}
 
-.btn-gradient-hover::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-  transition: left 0.5s;
-}
-
-.btn-gradient-hover:hover::before {
-  left: 100%;
-}
-
-/* Card hover effects */
-.card-hover {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.card-hover:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
-}
-
-/* Custom gradient backgrounds */
-.bg-gradient-radial {
-  background: radial-gradient(ellipse at center, var(--tw-gradient-stops));
-}
-
-.bg-gradient-conic {
-  background: conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops));
-}
-
-/* Text gradient */
-.text-gradient {
-  background: linear-gradient(135deg, #f43f5e, #ec4899, #8b5cf6);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
 
 /* Responsive typography */
 @media (max-width: 640px) {
