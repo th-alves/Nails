@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 import json
 
 class KamileNailsAPITester:
-    def __init__(self, base_url="https://schedule-confirm-bug.preview.emergentagent.com"):
+    def __init__(self, base_url="https://dropdown-match.preview.emergentagent.com"):
         self.base_url = base_url
         self.tests_run = 0
         self.tests_passed = 0

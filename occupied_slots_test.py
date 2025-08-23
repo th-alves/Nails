@@ -16,7 +16,7 @@ from datetime import datetime
 class OccupiedSlotsTest:
     def __init__(self):
         # Use the correct backend URL from frontend/.env
-        self.base_url = "https://schedule-confirm-bug.preview.emergentagent.com"
+        self.base_url = "https://dropdown-match.preview.emergentagent.com"
         self.test_date = "2025-08-25"  # Monday - valid business day (future date)
         self.test_results = []
         
