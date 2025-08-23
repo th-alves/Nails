@@ -216,7 +216,7 @@ test_plan:
   test_all: true
   test_priority: "high_first"
 
-  - task: "Occupied Slots Logic Test"
+  - task: "Pydantic v2 Modernization Testing"
     implemented: true
     working: true
     file: "/app/backend/server.py"
@@ -226,7 +226,19 @@ test_plan:
     status_history:
         - working: true
           agent: "testing"
-          comment: "Comprehensive occupied slots functionality test completed successfully. Tested specific scenario with Maria Silva booking at 09:00 on 2025-08-25. All core functionality working: 1) Initial slots available (10 slots), 2) Booking creation successful, 3) Occupied slot (09:00) correctly removed from available slots, 4) Other slots remain available, 5) Duplicate booking correctly returns 409 conflict error, 6) Multiple bookings on same day work correctly (Ana Costa 10:00, Carla Mendes 14:00, Beatriz Lima 16:00), 7) Final verification shows all occupied slots properly removed. Success rate: 100% (8/8 tests passed after verification)."
+          comment: "Comprehensive testing of Pydantic v2 modernization fixes completed successfully. All @field_validator decorators with @classmethod working perfectly. Tested all validation scenarios: date format (YYYY-MM-DD), time format (HH:MM), name length (min 2 chars), phone validation (min 10 digits). All validation errors properly caught with 422 status codes and descriptive error messages. No deprecation warnings observed. Modernization is production-ready."
+
+  - task: "FastAPI Lifespan Modernization Testing"
+    implemented: true
+    working: true
+    file: "/app/backend/server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: true
+          agent: "testing"
+          comment: "FastAPI lifespan context manager modernization verified successfully. Replaced deprecated @app.on_event with lifespan context manager. Database indexes created successfully on startup, proper shutdown handling with connection cleanup. Logs show 'Database indexes created successfully' and 'Kamile Nails API started successfully' on startup, 'Database connection closed' and 'Kamile Nails API shutdown successfully' on shutdown. Modernization working perfectly."
 
 agent_communication:
     - agent: "testing"
