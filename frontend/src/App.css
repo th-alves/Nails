@@ -179,16 +179,16 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: #f1f5f9;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(45deg, #ec4899, #f97316);
+  background: linear-gradient(to bottom, #f43f5e, #ec4899);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(45deg, #db2777, #ea580c);
+  background: linear-gradient(to bottom, #e11d48, #db2777);
 }
 
 /* Animação de carregamento */
