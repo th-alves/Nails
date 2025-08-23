@@ -74,6 +74,7 @@ function App() {
   const [selectedTime, setSelectedTime] = useState('');
   const [bookedDates, setBookedDates] = useState([]);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
