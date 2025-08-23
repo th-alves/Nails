@@ -7,7 +7,7 @@ import requests
 import json
 
 def test_duplicate_booking():
-    base_url = "https://dropdown-match.preview.emergentagent.com"
+    base_url = "https://booking-debug.preview.emergentagent.com"
     
     duplicate_booking_data = {
         "date": "2025-08-25",
