@@ -359,21 +359,7 @@ html {
   animation: shimmer 1.5s infinite;
 }
 
-/* Custom focus styles */
-.focus-ring {
-  transition: all 0.2s ease;
-}
 
-.focus-ring:focus {
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(244, 63, 94, 0.1);
-  border-color: #f43f5e;
-}
-
-/* Spacing utilities */
-.space-y-safe > * + * {
-  margin-top: var(--space, 1rem);
-}
 
 /* Mobile optimizations */
 @media (max-width: 768px) {
