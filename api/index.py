@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException, Request
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel, field_validator
@@ -15,15 +15,6 @@ logger = logging.getLogger(__name__)
 
 # MongoDB connection
 MONGO_URL = os.getenv("MONGO_URL", "mongodb+srv://kamile:nails2025@clusterk.qp4aihj.mongodb.net/kamile_nails?retryWrites=true&w=majority&appName=ClusterK")
-client = None
-db = None
-
-def get_database():
-    global client, db
-    if client is None:
-        client = AsyncIOMotorClient(MONGO_URL)
-        db = client.kamile_nails
-    return db
 
 app = FastAPI(title="Kamile Nails API", version="1.0.0")
 
@@ -35,6 +26,23 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Global database connection
+_client = None
+_db = None
+
+async def get_database():
+    global _client, _db
+    if _client is None:
+        _client = AsyncIOMotorClient(MONGO_URL)
+        _db = _client.kamile_nails
+        # Create indexes
+        try:
+            await _db.bookings.create_index([("date", 1), ("time", 1)])
+            await _db.bookings.create_index([("status", 1)])
+        except Exception as e:
+            logger.error(f"Error creating indexes: {e}")
+    return _db
 
 # Pydantic models
 class BookingCreate(BaseModel):
