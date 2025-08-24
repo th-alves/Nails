@@ -323,6 +323,18 @@ test_plan:
           agent: "testing"
           comment: "FastAPI lifespan context manager modernization verified successfully. Replaced deprecated @app.on_event with lifespan context manager. Database indexes created successfully on startup, proper shutdown handling with connection cleanup. Logs show 'Database indexes created successfully' and 'Kamile Nails API started successfully' on startup, 'Database connection closed' and 'Kamile Nails API shutdown successfully' on shutdown. Modernization working perfectly."
 
+  - task: "Vercel Production Deployment"
+    implemented: false
+    working: false
+    file: "/app/frontend/.env"
+    stuck_count: 1
+    priority: "high"
+    needs_retesting: true
+    status_history:
+        - working: false
+          agent: "testing"
+          comment: "🚨 CRITICAL DEPLOYMENT ISSUE: Vercel site https://kamile-nails-kn.vercel.app has INCOMPLETE deployment. Frontend loads perfectly but backend is MISSING on Vercel. All API endpoints return HTML instead of JSON, causing booking system to be non-functional. Time slots don't load, bookings fail. The working backend is still on development server. URGENT: Need to either deploy backend to Vercel or configure production environment variables correctly."
+
 agent_communication:
     - agent: "testing"
       message: "Comprehensive backend API testing completed successfully. All 7 core API endpoints (health, available-slots, bookings CRUD, dashboard stats) are working perfectly. Tested with realistic data as requested: Ana Silva, (11) 98765-4321, nail art colorida. All error scenarios properly handled including weekend bookings, duplicate slots, and invalid data validation. API is production-ready."
