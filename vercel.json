@@ -1,11 +1,19 @@
 {
-  "buildCommand": "cd frontend && yarn install && yarn build",
-  "outputDirectory": "frontend/build",
   "functions": {
-    "api/*.py": {
+    "api/index.py": {
       "runtime": "@vercel/python"
     }
   },
+  "builds": [
+    {
+      "src": "frontend/package.json",
+      "use": "@vercel/node",
+      "config": {
+        "buildCommand": "cd frontend && yarn install && yarn build",
+        "outputDirectory": "frontend/build"
+      }
+    }
+  ],
   "routes": [
     {
       "src": "/api/(.*)",
@@ -13,12 +21,11 @@
     },
     {
       "src": "/(.*)",
-      "dest": "/index.html"
+      "dest": "/frontend/build/index.html"
     }
   ],
   "env": {
-    "MONGO_URL": "mongodb+srv://kamile:nails2025@clusterk.qp4aihj.mongodb.net/kamile_nails?retryWrites=true&w=majority&appName=ClusterK",
-    "REACT_APP_BACKEND_URL": "https://kamile-nails-kn.vercel.app"
+    "MONGO_URL": "mongodb+srv://kamile:nails2025@clusterk.qp4aihj.mongodb.net/kamile_nails?retryWrites=true&w=majority&appName=ClusterK"
   },
   "headers": [
     {
