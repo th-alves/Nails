@@ -14,7 +14,11 @@ import { toast } from 'sonner';
 import kamile from "./images/kamile.png";
 import './App.css';
 
-const API_BASE_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';
+// Configuração de API URL com fallback para produção
+const API_BASE_URL = process.env.REACT_APP_BACKEND_URL || 
+  (typeof window !== 'undefined' && window.location.hostname === 'kamile-nails-kn.vercel.app') 
+    ? 'https://calendar-debug.preview.emergentagent.com' 
+    : 'http://localhost:8001';
 
 // Dados dos testimoniais
 const testimonials = [
