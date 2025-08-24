@@ -212,7 +212,7 @@ async def create_booking(booking: BookingCreate):
 async def get_bookings(date: Optional[str] = None, status: Optional[str] = None):
     """Get bookings with optional filtering"""
     try:
-        db = get_database()
+        db = await get_database()
         
         # Build query filter
         query_filter = {}
