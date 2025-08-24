@@ -7,7 +7,7 @@ import requests
 import json
 
 def test_duplicate_booking():
-    base_url = "https://calendar-debug.preview.emergentagent.com"
+    base_url = "https://quality-scout-1.preview.emergentagent.com"
     
     duplicate_booking_data = {
         "date": "2025-08-25",
