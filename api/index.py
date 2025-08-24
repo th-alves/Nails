@@ -117,7 +117,7 @@ async def health_check():
 async def get_available_slots(date: str):
     """Get available time slots for a specific date"""
     try:
-        db = get_database()
+        db = await get_database()
         
         # Parse and validate date
         date_obj = datetime.strptime(date, '%Y-%m-%d').date()
