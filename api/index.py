@@ -314,5 +314,45 @@ async def get_dashboard_stats():
         raise HTTPException(status_code=500, detail="Internal server error")
 
 # Vercel serverless function handler
-def handler(request: Request):
-    return app
+async def handler(request):
+    import asyncio
+    from fastapi import Request
+    
+    # Handle preflight OPTIONS requests
+    if request.method == "OPTIONS":
+        return JSONResponse(
+            content={},
+            headers={
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+                "Access-Control-Allow-Headers": "Content-Type, Authorization",
+            }
+        )
+    
+    # Convert Vercel request to FastAPI request
+    scope = {
+        "type": "http",
+        "method": request.method,
+        "path": request.url.path,
+        "query_string": str(request.url.query).encode(),
+        "headers": [(k.encode(), v.encode()) for k, v in request.headers.items()],
+    }
+    
+    receive = lambda: {"type": "http.request", "body": request.body}
+    
+    response = {"status_code": 200, "headers": [], "body": b""}
+    
+    def send(message):
+        if message["type"] == "http.response.start":
+            response["status_code"] = message["status"]
+            response["headers"] = message["headers"]
+        elif message["type"] == "http.response.body":
+            response["body"] += message.get("body", b"")
+    
+    await app(scope, receive, send)
+    
+    return {
+        "statusCode": response["status_code"],
+        "headers": {k.decode(): v.decode() for k, v in response["headers"]},
+        "body": response["body"].decode(),
+    }
