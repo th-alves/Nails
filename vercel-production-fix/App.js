@@ -18,7 +18,7 @@ import './App.css';
 const getApiBaseUrl = () => {
   // Se estiver na Vercel, use nosso backend
   if (typeof window !== 'undefined' && window.location.hostname.includes('vercel.app')) {
-    return 'https://quality-scout-1.preview.emergentagent.com';
+    return 'https://nail-artistry-4.preview.emergentagent.com';
   }
   // Caso contrário, use a variável de ambiente ou localhost
   return process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001';

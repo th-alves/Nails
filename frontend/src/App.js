@@ -15,7 +15,7 @@ import kamile from "./images/kamile.png";
 import './App.css';
 
 // Configuração de API URL
-const API_BASE_URL = process.env.REACT_APP_BACKEND_URL || 'https://quality-scout-1.preview.emergentagent.com';
+const API_BASE_URL = process.env.REACT_APP_BACKEND_URL || 'https://nail-artistry-4.preview.emergentagent.com';
 
 console.log('API_BASE_URL:', API_BASE_URL);
 
