@@ -242,7 +242,7 @@ async def get_bookings(date: Optional[str] = None, status: Optional[str] = None)
 async def get_booking(booking_id: str):
     """Get a specific booking by ID"""
     try:
-        db = get_database()
+        db = await get_database()
         booking = await db.bookings.find_one({"id": booking_id})
         
         if not booking:
@@ -260,7 +260,7 @@ async def get_booking(booking_id: str):
 async def cancel_booking(booking_id: str):
     """Cancel a booking"""
     try:
-        db = get_database()
+        db = await get_database()
         
         # Find and update booking
         result = await db.bookings.update_one(
@@ -291,7 +291,7 @@ async def cancel_booking(booking_id: str):
 async def get_dashboard_stats():
     """Get dashboard statistics"""
     try:
-        db = get_database()
+        db = await get_database()
         today = datetime.now().date().strftime('%Y-%m-%d')
         
         # Count total bookings
