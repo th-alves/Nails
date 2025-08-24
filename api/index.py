@@ -156,7 +156,7 @@ async def get_available_slots(date: str):
 async def create_booking(booking: BookingCreate):
     """Create a new booking"""
     try:
-        db = get_database()
+        db = await get_database()
         
         # Parse date
         date_obj = datetime.strptime(booking.date, '%Y-%m-%d').date()
